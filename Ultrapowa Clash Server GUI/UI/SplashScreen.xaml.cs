@@ -21,11 +21,11 @@ namespace UCS.UI
 
         public SplashScreen()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             SS = this;
-            label_version.Content = "UCS " + ConfUCS.VersionUCS;
-            Opacity = 0;
-            OpInW();
+            this.label_version.Content = "UCS " + ConfUCS.VersionUCS;
+            this.Opacity = 0;
+            this.OpInW();
 
         }
 
@@ -40,22 +40,22 @@ namespace UCS.UI
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            OpOutW(sender, e);
+            this.OpOutW(sender, e);
         }
 
         private void OpInW()
         {
             var OpIn = new DoubleAnimation(1, TimeSpan.FromSeconds(0.5));
-            BeginAnimation(OpacityProperty, OpIn);
+            this.BeginAnimation(OpacityProperty, OpIn);
         }
 
         private void OpOutW(object sender, CancelEventArgs e)
         {
-            Closing -= Window_Closing;
+            this.Closing -= this.Window_Closing;
             e.Cancel = true;
             var OpOut = new DoubleAnimation(0, TimeSpan.FromSeconds(0.5));
             OpOut.Completed += (s, _) => { this.Close(); MainWindow.RemoteWindow.Show(); MainWindow.IsFocusOk = true; };
-            BeginAnimation(OpacityProperty, OpOut);
+            this.BeginAnimation(OpacityProperty, OpOut);
         }
     }
 }

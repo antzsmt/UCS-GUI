@@ -10,7 +10,7 @@ namespace UCS.Sys
     {
         public static void Check()
         {
-            var NamesEL = "";
+            var NamesEL = string.Empty;
             XmlTextReader ReadTheXML = null;
 
             try
@@ -22,7 +22,7 @@ namespace UCS.Sys
                         if (ReadTheXML.NodeType == XmlNodeType.Element) NamesEL = ReadTheXML.Name;
                         else
                         {
-                            if ((ReadTheXML.NodeType == XmlNodeType.Text) && (ReadTheXML.HasValue))
+                            if ((ReadTheXML.NodeType == XmlNodeType.Text) && ReadTheXML.HasValue)
                             {
                                 switch (NamesEL)
                                 {
@@ -54,7 +54,6 @@ namespace UCS.Sys
 
                 ConfUCS.IsUpdateAvailable = true;
             }
-
             else
             {
 

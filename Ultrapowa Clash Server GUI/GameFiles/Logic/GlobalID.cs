@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
+
 using Newtonsoft.Json;
 
 namespace UCS.Logic
@@ -24,7 +25,6 @@ namespace UCS.Logic
              * r1: 786432
              * return 3000000 - 1000000 * (3 + 0)
              */
-
             int r1 = 1125899907;
             r1 = (int)(((long)r1 * (long)globalID) >> 32);
             return globalID - 1000000 * ((r1 >> 18) + (r1 >> 31));
@@ -38,7 +38,6 @@ namespace UCS.Logic
              * commandType: 786432
              * return 3 + 0
              */
-
             int r1 = 1125899907;
             commandType = (int)(((long)r1 * (long)commandType) >> 32);
             return (commandType >> 18) + (commandType >> 31);

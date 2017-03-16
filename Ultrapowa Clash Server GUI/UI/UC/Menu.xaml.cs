@@ -20,52 +20,60 @@ namespace UCS.UI.UC
 
         public Menu()
         {
-            InitializeComponent();
-            ClickEvent = ButtonBase.ClickEvent.AddOwner(typeof(Menu));
-            OverEvent = MouseEnterEvent.AddOwner(typeof(Menu));
-            RetireEvent = MouseLeaveEvent.AddOwner(typeof(Menu));
+            this.InitializeComponent();
+            this.ClickEvent = ButtonBase.ClickEvent.AddOwner(typeof(Menu));
+            this.OverEvent = MouseEnterEvent.AddOwner(typeof(Menu));
+            this.RetireEvent = MouseLeaveEvent.AddOwner(typeof(Menu));
 
-            Background = new SolidColorBrush(Color.FromRgb(0x00, 0x77, 0x9F));
+            this.Background = new SolidColorBrush(Color.FromRgb(0x00, 0x77, 0x9F));
             var RT = new RotateTransform(90);
-            Arrow.RenderTransformOrigin = new Point(0.5, 0.5);
-            Arrow.RenderTransform = RT;
+            this.Arrow.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.Arrow.RenderTransform = RT;
         }
 
         #region Events
 
         public event RoutedEventHandler Retire
         {
-            add { AddHandler(OverEvent, value); }
-            remove { RemoveHandler(OverEvent, value); }
+            add {
+                this.AddHandler(this.OverEvent, value); }
+
+            remove {
+                this.RemoveHandler(this.OverEvent, value); }
         }
 
         public event RoutedEventHandler Over
         {
-            add { AddHandler(OverEvent, value); }
-            remove { RemoveHandler(OverEvent, value); }
+            add {
+                this.AddHandler(this.OverEvent, value); }
+
+            remove {
+                this.RemoveHandler(this.OverEvent, value); }
         }
 
         public event RoutedEventHandler Click
         {
 
-            add { AddHandler(ClickEvent, value); }
-            remove { RemoveHandler(ClickEvent, value); }
+            add {
+                this.AddHandler(this.ClickEvent, value); }
+
+            remove {
+                this.RemoveHandler(this.ClickEvent, value); }
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
-            CaptureMouse();
+            this.CaptureMouse();
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
-            if (IsMouseCaptured)
+            if (this.IsMouseCaptured)
             {
-                ReleaseMouseCapture();
-                if (IsMouseOver)
-                    RaiseEvent(new RoutedEventArgs(ClickEvent, this));
+                this.ReleaseMouseCapture();
+                if (this.IsMouseOver) this.RaiseEvent(new RoutedEventArgs(this.ClickEvent, this));
             }
         }
 
@@ -75,16 +83,17 @@ namespace UCS.UI.UC
         {
             get
             {
-                return Name.Content.ToString();
+                return this.Name.Content.ToString();
             }
+
             set
             {
-                Name.Content = value;
-                if (IsArrowEnabled)
+                this.Name.Content = value;
+                if (this.IsArrowEnabled)
                 {
-                    Name.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                    Arrow.Margin = new Thickness(0, 0, -Name.DesiredSize.Width - 16, 0);
-                    ACAB.Margin = new Thickness(-24, 0, 0, 0);
+                    this.Name.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    this.Arrow.Margin = new Thickness(0, 0, -this.Name.DesiredSize.Width - 16, 0);
+                    this.ACAB.Margin = new Thickness(-24, 0, 0, 0);
                 }  
             }
         }
@@ -93,11 +102,12 @@ namespace UCS.UI.UC
         {
             get
             {
-                return Icon.Source;
+                return this.Icon.Source;
             }
+
             set
             {
-                Icon.Source = value;
+                this.Icon.Source = value;
             }
         }
 
@@ -105,12 +115,13 @@ namespace UCS.UI.UC
         {
             get
             {
-                return Arrow.Source;
+                return this.Arrow.Source;
             }
+
             set
             {
-                Arrow.Source = value;
-                IsArrowEnabled = true;
+                this.Arrow.Source = value;
+                this.IsArrowEnabled = true;
             }
         }
 
@@ -119,11 +130,12 @@ namespace UCS.UI.UC
         {
             get
             {
-                return _IsArrowEnabled;
+                return this._IsArrowEnabled;
             }
+
             set
             {
-                _IsArrowEnabled = value;
+                this._IsArrowEnabled = value;
             }
         }
 
@@ -132,19 +144,20 @@ namespace UCS.UI.UC
         {
             get
             {
-                return _IsPressed;
+                return this._IsPressed;
             }
+
             set
             {
-                _IsPressed = value;
+                this._IsPressed = value;
                 if (value)
                 {
-                    AnimationLib.RotateImage(Arrow, 180, 0.25);
+                    AnimationLib.RotateImage(this.Arrow, 180, 0.25);
                     AnimationLib.ChangeBackgroundColor(this, Color.FromRgb(0x00, 0x4c, 0x65), 0.2);
                 }
                 else
                 {
-                    AnimationLib.RotateImage(Arrow, 90, 0.25);
+                    AnimationLib.RotateImage(this.Arrow, 90, 0.25);
                     AnimationLib.ChangeBackgroundColor(this, Color.FromRgb(0x00, 0x77, 0x9F), 0.2);
                 }
             }

@@ -1,56 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using UCS.Core;
-using UCS.GameFiles;
-using UCS.Helpers;
-
-namespace UCS.Logic
+﻿namespace UCS.Logic
 {
-    class DataSlot
+    #region Usings
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
+    using Newtonsoft.Json.Linq;
+
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.GameFiles;
+    using UCS.Helpers;
+
+    #endregion
+
+    internal class DataSlot
     {
         public Data Data;
+
         public int Value;
 
         public DataSlot(Data d, int value)
         {
-            Data = d;
-            Value = value;
+            this.Data = d;
+            this.Value = value;
         }
 
-        public void Decode(BinaryReader br)
+        public void Decode(Reader br)
         {
-            Data = br.ReadDataReference();
-            Value = br.ReadInt32WithEndian();
+            this.Data = br.ReadDataReference();
+            this.Value = br.ReadInt32WithEndian();
+            Debug.Write(this.Data);
+            Debug.Write(this.Value);
         }
 
         public byte[] Encode()
         {
             List<Byte> data = new List<Byte>();
-            data.AddInt32(Data.GetGlobalID());
-            data.AddInt32(Value);
+            data.AddInt32(this.Data.GetGlobalID());
+            data.AddInt32(this.Value);
             return data.ToArray();
         }
 
         public JObject Save(JObject jsonObject)
         {
-            jsonObject.Add("global_id", Data.GetGlobalID());
-            jsonObject.Add("value", Value);
+            jsonObject.Add("global_id", this.Data.GetGlobalID());
+            jsonObject.Add("value", this.Value);
             return jsonObject;
         }
 
         public void Load(JObject jsonObject)
         {
-            Data = ObjectManager.DataTables.GetDataById(jsonObject["global_id"].ToObject<int>());
-            Value = jsonObject["value"].ToObject<int>();
+            this.Data = ObjectManager.DataTables.GetDataById(jsonObject["global_id"].ToObject<int>());
+            this.Value = jsonObject["value"].ToObject<int>();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace UCS
     class AnimationLib
     {
 
-        //Made by ADeltaX :P
+        // Made by ADeltaX :P
 
         /// <summary>
         /// Use this method to make an animation for a control in Y axis

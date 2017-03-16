@@ -10,16 +10,16 @@ namespace UCS.Sys
     {
         public static Version thisAppVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-        public static string Language = "en-US"; //Translation coming soon.
+        public static string Language = "en-US"; // Translation coming soon.
 
         public static bool DebugMode = true;
         public static bool EnableRemoteControl = false;
-        public static bool IsConsoleMode = true; //Will start console first, overridable by config overridable by args.
+        public static bool IsConsoleMode = true; // Will start console first, overridable by config overridable by args.
         public static bool IsDefaultMode = false;
         public static bool IsLogEnabled = true;
         public static string LogDirectory = System.IO.Directory.GetCurrentDirectory() + @"\logs\";
-        public static readonly string VersionUCS = "" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-        public static string UnivTitle = "Ultrapowa Clash Server " + VersionUCS +  " | " + "OFFLINE";
+        public static readonly string VersionUCS = string.Empty + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        public static string UnivTitle = "Clash Royale Spain Server " + VersionUCS +  " | " + "OFFLINE";
         public static string LogPath = "NONE";
         public static bool IsPreloaded = false;
         public static bool IsConsoleFirst = false;
@@ -38,7 +38,7 @@ namespace UCS.Sys
         public static bool AutoStartServer = true;
 
 
-        //Updater section
+        // Updater section
         public static bool IsUpdateAvailable = false;
         public static Version NewVer = new Version();
         public static string UrlXML = "http://www.google.com";
@@ -61,8 +61,7 @@ namespace UCS.Sys
         public void PreloadConfig()
         {
 
-            //Here will preload and check for config errors.
-
+            // Here will preload and check for config errors.
         }
 
     }

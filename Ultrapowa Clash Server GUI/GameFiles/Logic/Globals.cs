@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
 using UCS.Core;
-using UCS.Logic;
 using UCS.Helpers;
 
 namespace UCS.GameFiles
@@ -65,12 +65,13 @@ namespace UCS.GameFiles
                     result = GamePlayUtil.CalculateResourceCost(10, 1, supCost, infCost, resourceCount);
                 }
             }
+
             return result;
         }
 
         public GlobalData GetGlobalData(string name)
         {
-            return (GlobalData)GetDataByName(name);
+            return (GlobalData)this.GetDataByName(name);
         }
 
         public int GetResourceDiamondCost(int resourceCount, ResourceData resourceData)
@@ -78,7 +79,7 @@ namespace UCS.GameFiles
             int result = 0;
             if (resourceData == ObjectManager.DataTables.GetResourceByName("DarkElixir"))
             {
-                result = GetDarkElixirDiamondCost(resourceCount);
+                result = this.GetDarkElixirDiamondCost(resourceCount);
             }
             else
             {
@@ -132,6 +133,7 @@ namespace UCS.GameFiles
                     }
                 }
             }
+
             return result;
         }
 
@@ -169,6 +171,7 @@ namespace UCS.GameFiles
                     cost = ObjectManager.DataTables.GetGlobals().GetGlobalData("SPEED_UP_DIAMOND_COST_1_MIN").NumberValue;
                 }
             }
+
             return cost;
         }
     }

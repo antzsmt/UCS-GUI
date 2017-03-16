@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UCS.PacketProcessing;
+
 using UCS.Helpers;
+using UCS.Packets;
 
 namespace UCS.Logic
 {
+    using UCS.Extensions.List;
+
     class ChatStreamEntry : StreamEntry
     {
         private string m_vMessage;
@@ -18,7 +21,7 @@ namespace UCS.Logic
 
         public string GetMessage()
         {
-            return m_vMessage;
+            return this.m_vMessage;
         }
 
         public override int GetStreamEntryType()
@@ -28,17 +31,17 @@ namespace UCS.Logic
 
         public override byte[] Encode()
         {
-            List<Byte> data = new List<Byte>();
+            List<byte> data = new List<byte>();
 
             data.AddRange(base.Encode());
-            data.AddString(m_vMessage);
+            data.AddString(this.m_vMessage);
 
             return data.ToArray();
         }
 
         public void SetMessage(string message)
         {
-            m_vMessage = message;
+            this.m_vMessage = message;
         }
     }    
 }

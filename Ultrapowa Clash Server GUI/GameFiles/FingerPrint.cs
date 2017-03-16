@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using UCS.Core;
-
-namespace UCS.GameFiles
+﻿namespace UCS.GameFiles
 {
-    class FingerPrint
+    #region Usings
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    #endregion
+
+    internal class FingerPrint
     {
         public FingerPrint(string filePath)
         {
-            files = new List<GameFile>();
+            this.files = new List<GameFile>();
             string fpstring = null;
 
             if (File.Exists(filePath))
@@ -24,7 +24,8 @@ namespace UCS.GameFiles
                 {
                     fpstring = sr.ReadToEnd();
                 }
-                LoadFromJson(fpstring);
+
+                this.LoadFromJson(fpstring);
                 Console.WriteLine("ObjectManager: fingerprint loaded");
             }
             else
@@ -34,8 +35,10 @@ namespace UCS.GameFiles
         }
 
         public List<GameFile> files { get; set; }
+
         public string sha { get; set; }
-        public string version { get; set; }
+
+        public static string version { get; set; }
 
         public void LoadFromJson(string jsonString)
         {
@@ -46,10 +49,11 @@ namespace UCS.GameFiles
             {
                 GameFile gf = new GameFile();
                 gf.Load(jsonFile);
-                files.Add(gf);
+                this.files.Add(gf);
             }
-            sha = jsonObject["sha"].ToObject<string>();
-            version = jsonObject["version"].ToObject<string>();       
+
+            this.sha = jsonObject["sha"].ToObject<string>();
+            version = jsonObject["version"].ToObject<string>();
         }
 
         public string SaveToJson()
@@ -57,36 +61,37 @@ namespace UCS.GameFiles
             JObject jsonData = new JObject();
 
             JArray jsonFilesArray = new JArray();
-            foreach (var file in files)
+            foreach (var file in this.files)
             {
                 JObject jsonObject = new JObject();
                 file.SaveToJson(jsonObject);
                 jsonFilesArray.Add(jsonObject);
             }
+
             jsonData.Add("files", jsonFilesArray);
-            jsonData.Add("sha", sha);
+            jsonData.Add("sha", this.sha);
             jsonData.Add("version", version);
 
             return JsonConvert.SerializeObject(jsonData).Replace("/", @"\/");
         }
     }
 
-    class GameFile
+    internal class GameFile
     {
-        public GameFile() { }
-        public String sha { get; set; }
-        public String file { get; set; }
+        public string sha { get; set; }
+
+        public string file { get; set; }
 
         public void Load(JObject jsonObject)
         {
-            sha = jsonObject["sha"].ToObject<string>();
-            file = jsonObject["file"].ToObject<string>();
+            this.sha = jsonObject["sha"].ToObject<string>();
+            this.file = jsonObject["file"].ToObject<string>();
         }
 
         public string SaveToJson(JObject fingerPrint)
         {
-            fingerPrint.Add("sha", sha);
-            fingerPrint.Add("file", file);
+            fingerPrint.Add("sha", this.sha);
+            fingerPrint.Add("file", this.file);
 
             return JsonConvert.SerializeObject(fingerPrint);
         }

@@ -50,6 +50,7 @@ namespace UCS.Sys
             ConsoleVisible = false;
 
         }
+
         public static void ShowConsole(bool active = true)
         {
             IntPtr handle = GetConsoleWindow();
@@ -59,7 +60,6 @@ namespace UCS.Sys
         }
 
         // Disable Console Exit Button
-
         public static void DisableConsoleExit()
         {
             IntPtr handle = GetConsoleWindow();

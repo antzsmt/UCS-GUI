@@ -1,70 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using UCS.Logic;
-
-namespace UCS.GameFiles
+﻿namespace UCS.GameFiles
 {
-    class DataTables
+    #region Usings
+
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using UCS.Core;
+    using UCS.Logic;
+
+    #endregion
+
+    internal class DataTables : IDisposable
     {
         private List<DataTable> m_vDataTables;
 
         public DataTables()
         {
-            m_vDataTables = new List<DataTable>();
-            for (int i = 0; i < 28; i++)
-                m_vDataTables.Add(new DataTable());
+            this.m_vDataTables = new List<DataTable>();
+
+            // for (int i = 0; i < 35; i++)
+            // m_vDataTables.Add(new DataTable());
+            if (ObjectManager.GameFiles.Count > 0)
+            {
+                for (int i = 0; i < ObjectManager.GameFiles.Count; i++)
+                {
+                    this.m_vDataTables.Add(new DataTable());
+                }
+            }
         }
 
-        public void InitDataTable(CSVTable t, int index)
+        /// <summary>
+        /// <see cref="Dispose"/> this instance.
+        /// </summary>
+        public void Dispose()
         {
-            if (index == 13)
-                m_vDataTables[index] = new Globals(t, index);
-            else
-                m_vDataTables[index] = new DataTable(t, index);
-        }   
+            this.m_vDataTables.Clear();
+        }
 
         public CharacterData GetCharacterByName(string name)
         {
-            DataTable dt = m_vDataTables[3];
+            DataTable dt = this.m_vDataTables[8];
             return (CharacterData)dt.GetDataByName(name);
         }
 
         public Data GetDataById(int id)
         {
             int classId = GlobalID.GetClassID(id) - 1;
-            DataTable dt = m_vDataTables[classId];
+            DataTable dt = this.m_vDataTables[classId];
             return dt.GetItemById(id);
         }
 
         public Globals GetGlobals()
         {
-            return (Globals)m_vDataTables[13];
+            return (Globals)this.m_vDataTables[15];
         }
 
-        public HeroData GetHeroByName(string name)
-        {
-            DataTable dt = m_vDataTables[27];
-            return (HeroData)dt.GetDataByName(name);
-        }
-
+        // public HeroData GetHeroByName(string name)
+        // {
+        // DataTable dt = m_vDataTables[8];
+        // return (HeroData)dt.GetDataByName(name);
+        // }
         public ResourceData GetResourceByName(string name)
         {
-            DataTable dt = m_vDataTables[2];
+            DataTable dt = this.m_vDataTables[24];
             return (ResourceData)dt.GetDataByName(name);
         }
 
         public DataTable GetTable(int i)
         {
-            return m_vDataTables[i];
+            return this.m_vDataTables[i];
         }
 
+        public void InitDataTable(CSVTable t, int index)
+        {
+            if (index == 15) this.m_vDataTables[index - 1] = new Globals(t, index);
+            else this.m_vDataTables[index - 1] = new DataTable(t, index);
+        }
     }
-
 }

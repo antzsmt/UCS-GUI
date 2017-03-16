@@ -1,29 +1,31 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.Collections.Concurrent;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UCS.GameFiles;
+
 using UCS.Core;
+using UCS.GameFiles;
 using UCS.Logic;
 
 namespace UCS.Helpers
 {
     static class Helpers
     {
-        public static UInt32 ReadUInt32WithEndian(this BinaryReader br)
+        public static uint ReadUInt32WithEndian(this BinaryReader br)
         {
             byte[] a32 = br.ReadBytes(4);
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(a32);
-            return BitConverter.ToUInt32(a32,0);
+            return BitConverter.ToUInt32(a32, 0);
         }
 
-        public static Int64 ReadInt64WithEndian(this BinaryReader br)
+        public static long ReadInt64WithEndian(this BinaryReader br)
         {
             byte[] a64 = br.ReadBytes(8);
             if (BitConverter.IsLittleEndian)
@@ -31,7 +33,7 @@ namespace UCS.Helpers
             return BitConverter.ToInt64(a64, 0);
         }
 
-        public static Int32 ReadInt32WithEndian(this BinaryReader br)
+        public static int ReadInt32WithEndian(this BinaryReader br)
         {
             byte[] a32 = br.ReadBytes(4);
             if (BitConverter.IsLittleEndian)
@@ -39,7 +41,7 @@ namespace UCS.Helpers
             return BitConverter.ToInt32(a32, 0);
         }
 
-        public static UInt16 ReadUInt16WithEndian(this BinaryReader br)
+        public static ushort ReadUInt16WithEndian(this BinaryReader br)
         {
             byte[] a16 = br.ReadBytes(2);
             if (BitConverter.IsLittleEndian)
@@ -66,7 +68,7 @@ namespace UCS.Helpers
             }
         }
 
-        public static String ReadScString(this BinaryReader br)
+        public static string ReadScString(this BinaryReader br)
         {
             int stringLength = br.ReadInt32WithEndian();
             string result;
@@ -76,7 +78,7 @@ namespace UCS.Helpers
                 if (stringLength > 0)
                 {
                     byte[] astr = br.ReadBytes(stringLength);
-                    result = System.Text.Encoding.UTF8.GetString(astr);
+                    result = Encoding.UTF8.GetString(astr);
                 }
                 else
                 {
@@ -98,25 +100,25 @@ namespace UCS.Helpers
             list.AddRange(BitConverter.GetBytes(data).Reverse());
         }
 
-        public static void AddString(this List<byte> list, string data)
-        {
-            if (data == null)
-                list.AddRange(BitConverter.GetBytes((int)-1).Reverse());
-            else
-            {
-                list.AddRange(BitConverter.GetBytes(Encoding.UTF8.GetByteCount(data)).Reverse());
-                list.AddRange(System.Text.Encoding.UTF8.GetBytes(data));
-            }
-        }
+        //public static void AddString(this List<byte> list, string data)
+        //{
+        //    if (data == null)
+        //        list.AddRange(BitConverter.GetBytes((int)-1).Reverse());
+        //    else
+        //    {
+        //        list.AddRange(BitConverter.GetBytes(Encoding.UTF8.GetByteCount(data)).Reverse());
+        //        list.AddRange(Encoding.UTF8.GetBytes(data));
+        //    }
+        //}
 
-        public static void AddDataSlots(this List<byte> list, List<DataSlot> data)
-        {
-            list.AddInt32(data.Count);
-            foreach (DataSlot dataSlot in data)
-            {
-                list.AddRange(dataSlot.Encode());
-            }
-        }
+        //public static void AddDataSlots(this List<byte> list, List<DataSlot> data)
+        //{
+        //    list.AddInt32(data.Count);
+        //    foreach (DataSlot dataSlot in data)
+        //    {
+        //        list.AddRange(dataSlot.Encode());
+        //    }
+        //}
 
         public static bool TryRemove<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> self, TKey key)
         {

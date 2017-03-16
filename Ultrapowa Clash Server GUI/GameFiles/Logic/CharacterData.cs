@@ -1,170 +1,965 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using UCS.Core;
-
 namespace UCS.GameFiles
 {
-    class CharacterData : CombatItemData
+    internal class CharacterData : Data
     {
-
-        public CharacterData(CSVRow row, DataTable dt)
-            : base(row, dt)
+        public CharacterData(CSVRow row, DataTable dt) : base(row, dt)
         {
-            LoadData(this, this.GetType(), row);
+            this.LoadData(this, this.GetType(), row);
         }
 
-        public override int GetHousingSpace()
+        public string Name
         {
-            return HousingSpace;
+            get; set;
         }
 
-        public override int GetCombatItemType()
+        public string Rarity
         {
-            return 0;
+            get; set;
         }
 
-        public override int GetRequiredLaboratoryLevel(int level)
+        public int SightRange
         {
-            return LaboratoryLevel[level];
+            get; set;
         }
 
-        public override int GetRequiredProductionHouseLevel()
+        public int DeployTime
         {
-            return BarrackLevel;
+            get; set;
         }
 
-        public override int GetTrainingTime(int level)
+        public int ChargeRange
         {
-            return TrainingTime[level];
+            get; set;
         }
 
-        public override int GetTrainingCost(int level)
+        public int Speed
         {
-            return TrainingCost[level];
+            get; set;
         }
 
-        public override ResourceData GetTrainingResource()
+        public int Hitpoints
         {
-            return ObjectManager.DataTables.GetResourceByName(TrainingResource);
+            get; set;
         }
 
-        public override int GetUpgradeCost(int level)
+        public int HitSpeed
         {
-            return UpgradeCost[level];
+            get; set;
         }
 
-        public override int GetUpgradeLevelCount()
+        public int LoadTime
         {
-            return UpgradeCost.Count;
+            get; set;
         }
 
-        public override ResourceData GetUpgradeResource(int level)
+        public int Damage
         {
-            return ObjectManager.DataTables.GetResourceByName(UpgradeResource[level]);
+            get; set;
         }
 
-        public override int GetUpgradeTime(int level)
+        public int DamageSpecial
         {
-            return UpgradeTimeH[level] * 3600;
+            get; set;
         }
 
-        public String TID { get; set; }
-        public String InfoTID { get; set; }
-        public String SWF { get; set; }
-        public int HousingSpace { get; set; }
-        public int BarrackLevel { get; set; }
-        public List<int> LaboratoryLevel { get; set; }
-        public int Speed { get; set; }
-        public int Hitpoints { get; set; }
-        public List<int> TrainingTime { get; set; }
-        public String TrainingResource { get; set; }
-        public List<int> TrainingCost { get; set; }
-        public List<int> UpgradeTimeH { get; set; }
-        public List<String> UpgradeResource { get; set; }
-        public List<int> UpgradeCost { get; set; }
-        public int AttackRange { get; set; }
-        public int AttackSpeed { get; set; }
-        public int Damage { get; set; }
-        public int PreferedTargetDamageMod { get; set; }
-        public int DamageRadius { get; set; }
-        public bool AreaDamageIgnoresWalls { get; set; }
-        public bool SelfAsAoeCenter { get; set; }
-        public String IconSWF { get; set; }
-        public String IconExportName { get; set; }
-        public String BigPicture { get; set; }
-        public String BigPictureSWF { get; set; }
-        public String Projectile { get; set; }
-        public String PreferedTargetBuilding { get; set; }
-        public String PreferedTargetBuildingClass { get; set; }
-        public String DeployEffect { get; set; }
-        public String AttackEffect { get; set; }
-        public String HitEffect { get; set; }
-        public bool IsFlying { get; set; }
-        public bool AirTargets { get; set; }
-        public bool GroundTargets { get; set; }
-        public int AttackCount { get; set; }
-        public String DieEffect { get; set; }
-        public String Animation { get; set; }
-        public int UnitOfType { get; set; }
-        public bool IsJumper { get; set; }
-        public int MovementOffsetAmount { get; set; }
-        public int MovementOffsetSpeed { get; set; }
-        public String TombStone { get; set; }
-        public int DieDamage { get; set; }
-        public int DieDamageRadius { get; set; }
-        public String DieDamageEffect { get; set; }
-        public int DieDamageDelay { get; set; }
-        public bool DisableProduction { get; set; }
-        public String SecondaryTroop { get; set; }
-        public bool IsSecondaryTroop { get; set; }
-        public int SecondaryTroopCnt { get; set; }
-        public int SecondarySpawnDist { get; set; }
-        public bool RandomizeSecSpawnDist { get; set; }
-        public bool PickNewTargetAfterPushback { get; set; }
-        public int PushbackSpeed { get; set; }
-        public String SummonTroop { get; set; }
-        public int SummonTroopCount { get; set; }
-        public int SummonCooldown { get; set; }
-        public String SummonEffect { get; set; }
-        public int SummonLimit { get; set; }
-        public int SpawnIdle { get; set; }
-        public int StrengthWeight { get; set; }
-        public String ChildTroop { get; set; }
-        public int ChildTroopCount { get; set; }
-        public int SpeedDecreasePerChildTroopLost { get; set; }
-        public int ChildTroop0_X { get; set; }
-        public int ChildTroop0_Y { get; set; }
-        public int ChildTroop1_X { get; set; }
-        public int ChildTroop1_Y { get; set; }
-        public int ChildTroop2_X { get; set; }
-        public int ChildTroop2_Y { get; set; }
-        public bool AttackMultipleBuildings { get; set; }
-        public bool IncreasingDamage { get; set; }
-        public int DamageLv2 { get; set; }
-        public int DamageLv3 { get; set; }
-        public int DamageLv4 { get; set; }
-        public int Lv2SwitchHits { get; set; }
-        public int Lv3SwitchHits { get; set; }
-        public int Lv4SwitchHits { get; set; }
-        public int AttackSpeedLv2 { get; set; }
-        public int AttackSpeedLv3 { get; set; }
-        public int AttackSpeedLv4 { get; set; }
-        public String AttackEffectLv2 { get; set; }
-        public String AttackEffectLv3 { get; set; }
-        public String AttackEffectLv4 { get; set; }
-        public String TransitionEffectLv2 { get; set; }
-        public String TransitionEffectLv3 { get; set; }
-        public String TransitionEffectLv4 { get; set; }
-        public int HitEffectOffset { get; set; }
-        public int TargetedEffectOffset { get; set; }
-        public int SecondarySpawnOffset { get; set; }
+        public int CrownTowerDamagePercent
+        {
+            get; set;
+        }
 
+        public bool LoadFirstHit
+        {
+            get; set;
+        }
+
+        public int StopTimeAfterAttack
+        {
+            get; set;
+        }
+
+        public int StopTimeAfterSpecialAttack
+        {
+            get; set;
+        }
+
+        public string Projectile
+        {
+            get; set;
+        }
+
+        public string CustomFirstProjectile
+        {
+            get; set;
+        }
+
+        public int MultipleProjectiles
+        {
+            get; set;
+        }
+
+        public int Range
+        {
+            get; set;
+        }
+
+        public int MinimumRange
+        {
+            get; set;
+        }
+
+        public bool AttacksGround
+        {
+            get; set;
+        }
+
+        public bool AttacksAir
+        {
+            get; set;
+        }
+
+        public int DeathDamageRadius
+        {
+            get; set;
+        }
+
+        public int DeathDamage
+        {
+            get; set;
+        }
+
+        public int DeathPushBack
+        {
+            get; set;
+        }
+
+        public int AttackPushBack
+        {
+            get; set;
+        }
+
+        public int ReloadAfterHits
+        {
+            get; set;
+        }
+
+        public int ReloadTime
+        {
+            get; set;
+        }
+
+        public int LifeTime
+        {
+            get; set;
+        }
+
+        public string ProjectileSpecial
+        {
+            get; set;
+        }
+
+        public string ProjectileEffect
+        {
+            get; set;
+        }
+
+        public string ProjectileEffectSpecial
+        {
+            get; set;
+        }
+
+        public int AreaDamageRadius
+        {
+            get; set;
+        }
+
+        public bool TargetOnlyBuildings
+        {
+            get; set;
+        }
+
+        public string DamageTypeVulnerabilities
+        {
+            get; set;
+        }
+
+        public string DamageTypeImmunities
+        {
+            get; set;
+        }
+
+        public int SpecialAttackInterval
+        {
+            get; set;
+        }
+
+        public int OpponentCardHealthReduction
+        {
+            get; set;
+        }
+
+        public int OwnCardHealthReduction
+        {
+            get; set;
+        }
+
+        public string BuffOnDamage
+        {
+            get; set;
+        }
+
+        public int BuffOnDamageTime
+        {
+            get; set;
+        }
+
+        public bool IgnoreTargetIfImmuneToBuff
+        {
+            get; set;
+        }
+
+        public string StartingBuff
+        {
+            get; set;
+        }
+
+        public int StartingBuffTime
+        {
+            get; set;
+        }
+
+        public string FileName
+        {
+            get; set;
+        }
+
+        public string BlueExportName
+        {
+            get; set;
+        }
+
+        public string BlueTopExportName
+        {
+            get; set;
+        }
+
+        public string RedExportName
+        {
+            get; set;
+        }
+
+        public string RedTopExportName
+        {
+            get; set;
+        }
+
+        public bool UseAnimator
+        {
+            get; set;
+        }
+
+        public string AttachedCharacter
+        {
+            get; set;
+        }
+
+        public int AttachedCharacterHeight
+        {
+            get; set;
+        }
+
+        public string DamageEffect
+        {
+            get; set;
+        }
+
+        public string DamageEffectSpecial
+        {
+            get; set;
+        }
+
+        public string DeathEffect
+        {
+            get; set;
+        }
+
+        public string MoveEffect
+        {
+            get; set;
+        }
+
+        public string SpawnEffect
+        {
+            get; set;
+        }
+
+        public bool CrowdEffects
+        {
+            get; set;
+        }
+
+        public int ShadowScaleX
+        {
+            get; set;
+        }
+
+        public int ShadowScaleY
+        {
+            get; set;
+        }
+
+        public int ShadowX
+        {
+            get; set;
+        }
+
+        public int ShadowY
+        {
+            get; set;
+        }
+
+        public int ShadowSkew
+        {
+            get; set;
+        }
+
+        public int Pushback
+        {
+            get; set;
+        }
+
+        public bool IgnorePushback
+        {
+            get; set;
+        }
+
+        public int Scale
+        {
+            get; set;
+        }
+
+        public int CollisionRadius
+        {
+            get; set;
+        }
+
+        public int Mass
+        {
+            get; set;
+        }
+
+        public int TileSizeOverride
+        {
+            get; set;
+        }
+
+        public string AreaBuff
+        {
+            get; set;
+        }
+
+        public int AreaBuffTime
+        {
+            get; set;
+        }
+
+        public int AreaBuffRadius
+        {
+            get; set;
+        }
+
+        public bool AreaBuffOwnTroops
+        {
+            get; set;
+        }
+
+        public bool AreaBuffEnemies
+        {
+            get; set;
+        }
+
+        public int Gold
+        {
+            get; set;
+        }
+
+        public int ManaOnDeath
+        {
+            get; set;
+        }
+
+        public string HealthBar
+        {
+            get; set;
+        }
+
+        public int HealthBarOffsetY
+        {
+            get; set;
+        }
+
+        public bool ShowHealthNumber
+        {
+            get; set;
+        }
+
+        public int FlyingHeight
+        {
+            get; set;
+        }
+
+        public string DamageExportName
+        {
+            get; set;
+        }
+
+        public int GrowTime
+        {
+            get; set;
+        }
+
+        public int GrowSize
+        {
+            get; set;
+        }
+
+        public string MorphCharacter
+        {
+            get; set;
+        }
+
+        public string MorphEffect
+        {
+            get; set;
+        }
+
+        public bool HealOnMorph
+        {
+            get; set;
+        }
+
+        public string AreaEffectOnMorph
+        {
+            get; set;
+        }
+
+        public string AttackStartEffect
+        {
+            get; set;
+        }
+
+        public string AttackStartEffectSpecial
+        {
+            get; set;
+        }
+
+        public int DashCooldown
+        {
+            get; set;
+        }
+
+        public int JumpHeight
+        {
+            get; set;
+        }
+
+        public int DashPushBack
+        {
+            get; set;
+        }
+
+        public int DashRadius
+        {
+            get; set;
+        }
+
+        public int DashDamage
+        {
+            get; set;
+        }
+
+        public string LandingEffect
+        {
+            get; set;
+        }
+
+        public int DashMinRange
+        {
+            get; set;
+        }
+
+        public int DashMaxRange
+        {
+            get; set;
+        }
+
+        public int JumpSpeed
+        {
+            get; set;
+        }
+
+        public string ContinuousEffect
+        {
+            get; set;
+        }
+
+        public int OpponentCardSpawn
+        {
+            get; set;
+        }
+
+        public int OwnCardSpawn
+        {
+            get; set;
+        }
+
+        public int SpawnStartTime
+        {
+            get; set;
+        }
+
+        public int SpawnInterval
+        {
+            get; set;
+        }
+
+        public int SpawnNumber
+        {
+            get; set;
+        }
+
+        public int SpawnLimit
+        {
+            get; set;
+        }
+
+        public int SpawnPauseTime
+        {
+            get; set;
+        }
+
+        public int SpawnCharacterLevelIndex
+        {
+            get; set;
+        }
+
+        public string SpawnCharacter
+        {
+            get; set;
+        }
+
+        public string SpawnCharacterEffect
+        {
+            get; set;
+        }
+
+        public string SpawnDeployBaseAnim
+        {
+            get; set;
+        }
+
+        public int SpawnRadius
+        {
+            get; set;
+        }
+
+        public int DeathSpawnCount
+        {
+            get; set;
+        }
+
+        public string DeathSpawnCharacter
+        {
+            get; set;
+        }
+
+        public int DeathSpawnRadius
+        {
+            get; set;
+        }
+
+        public int DeathSpawnAngleShift
+        {
+            get; set;
+        }
+
+        public int DeathSpawnDeployTime
+        {
+            get; set;
+        }
+
+        public bool DeathSpawnPushback
+        {
+            get; set;
+        }
+
+        public string DeathAreaEffect
+        {
+            get; set;
+        }
+
+        public bool Kamikaze
+        {
+            get; set;
+        }
+
+        public int SpawnPathfindSpeed
+        {
+            get; set;
+        }
+
+        public string SpawnPathfindEffect
+        {
+            get; set;
+        }
+
+        public int SpawnPushback
+        {
+            get; set;
+        }
+
+        public int SpawnPushbackRadius
+        {
+            get; set;
+        }
+
+        public string SpawnAreaObject
+        {
+            get; set;
+        }
+
+        public string ChargeEffect
+        {
+            get; set;
+        }
+
+        public string TakeDamageEffect
+        {
+            get; set;
+        }
+
+        public int ProjectileStartRadius
+        {
+            get; set;
+        }
+
+        public int ProjectileStartZ
+        {
+            get; set;
+        }
+
+        public int StopMovementAfterMS
+        {
+            get; set;
+        }
+
+        public int WaitMS
+        {
+            get; set;
+        }
+
+        public bool DontStopMoveAnim
+        {
+            get; set;
+        }
+
+        public bool IsSummonerTower
+        {
+            get; set;
+        }
+
+        public int NoDeploySizeW
+        {
+            get; set;
+        }
+
+        public int NoDeploySizeH
+        {
+            get; set;
+        }
+
+        public string TID
+        {
+            get; set;
+        }
+
+        public int VariableDamage2
+        {
+            get; set;
+        }
+
+        public int VariableDamageTime1
+        {
+            get; set;
+        }
+
+        public int VariableDamage3
+        {
+            get; set;
+        }
+
+        public int VariableDamageTime2
+        {
+            get; set;
+        }
+
+        public string TargettedDamageEffect1
+        {
+            get; set;
+        }
+
+        public string TargettedDamageEffect2
+        {
+            get; set;
+        }
+
+        public string TargettedDamageEffect3
+        {
+            get; set;
+        }
+
+        public string DamageLevelTransitionEffect12
+        {
+            get; set;
+        }
+
+        public string DamageLevelTransitionEffect23
+        {
+            get; set;
+        }
+
+        public string FlameEffect1
+        {
+            get; set;
+        }
+
+        public string FlameEffect2
+        {
+            get; set;
+        }
+
+        public string FlameEffect3
+        {
+            get; set;
+        }
+
+        public int TargetEffectY
+        {
+            get; set;
+        }
+
+        public bool SelfAsAoeCenter
+        {
+            get; set;
+        }
+
+        public bool HidesWhenNotAttacking
+        {
+            get; set;
+        }
+
+        public int HideTimeMs
+        {
+            get; set;
+        }
+
+        public bool HideBeforeFirstHit
+        {
+            get; set;
+        }
+
+        public bool SpecialAttackWhenHidden
+        {
+            get; set;
+        }
+
+        public string TargetedHitEffect
+        {
+            get; set;
+        }
+
+        public string TargetedHitEffectSpecial
+        {
+            get; set;
+        }
+
+        public int UpTimeMs
+        {
+            get; set;
+        }
+
+        public string HideEffect
+        {
+            get; set;
+        }
+
+        public string AppearEffect
+        {
+            get; set;
+        }
+
+        public int AppearPushbackRadius
+        {
+            get; set;
+        }
+
+        public int AppearPushback
+        {
+            get; set;
+        }
+
+        public string AppearAreaObject
+        {
+            get; set;
+        }
+
+        public int ManaCollectAmount
+        {
+            get; set;
+        }
+
+        public int ManaGenerateTimeMs
+        {
+            get; set;
+        }
+
+        public int ManaGenerateLimit
+        {
+            get; set;
+        }
+
+        public bool HasRotationOnTimeline
+        {
+            get; set;
+        }
+
+        public int TurretMovement
+        {
+            get; set;
+        }
+
+        public int ProjectileYOffset
+        {
+            get; set;
+        }
+
+        public int ChargeSpeedMultiplier
+        {
+            get; set;
+        }
+
+        public int RandomDeployDelay
+        {
+            get; set;
+        }
+
+        public string DeployBaseAnimExportName
+        {
+            get; set;
+        }
+
+        public bool JumpEnabled
+        {
+            get; set;
+        }
+
+        public int SightClip
+        {
+            get; set;
+        }
+
+        public string AreaEffectOnDash
+        {
+            get; set;
+        }
+
+        public int SightClipSide
+        {
+            get; set;
+        }
+
+        public int WalkingSpeedTweakPercentage
+        {
+            get; set;
+        }
+
+        public int ShieldHitpoints
+        {
+            get; set;
+        }
+
+        public int ShieldDiePushback
+        {
+            get; set;
+        }
+
+        public string ShieldLostEffect
+        {
+            get; set;
+        }
+
+        public string BlueShieldExportName
+        {
+            get; set;
+        }
+
+        public string RedShieldExportName
+        {
+            get; set;
+        }
+
+        public string LoadAttackEffect1
+        {
+            get; set;
+        }
+
+        public string LoadAttackEffect2
+        {
+            get; set;
+        }
+
+        public string LoadAttackEffect3
+        {
+            get; set;
+        }
+
+        public string LoadAttackEffectReady
+        {
+            get; set;
+        }
+
+        public int RotateAngleSpeed
+        {
+            get; set;
+        }
+
+        public bool EnableAttackOnDamage
+        {
+            get; set;
+        }
+
+        public int SecondaryHitDelay
+        {
+            get; set;
+        }
+
+        public int DeployTimerDelay
+        {
+            get; set;
+        }
+
+        public bool RetargetAfterAttack
+        {
+            get; set;
+        }
+
+        public int AttackShakeTime
+        {
+            get; set;
+        }
+
+        public int VisualHitSpeed
+        {
+            get; set;
+        }
     }
 }

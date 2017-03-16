@@ -11,11 +11,11 @@ namespace UCS.Core
         static Timer UpdateInfo = new Timer();
         static Stopwatch HighPrecisionUpdateTimer = new Stopwatch();
         static Stopwatch PerformanceCounter = new Stopwatch();
-        public static string ElapsedTime = "";
+        public static string ElapsedTime = string.Empty;
 
         public static void Setup()
         {
-            //For console
+            // For console
             if (ConfUCS.IsConsoleMode)
             {
                 UpdateInfo.Elapsed += UpdateInfo_Tick;
@@ -23,10 +23,11 @@ namespace UCS.Core
             }
             else
             {
-                //For GUI
+                // For GUI
                 MainWindow.RemoteWindow.PrepareTimer();
             }
         }
+
         private static void UpdateInfo_Elapsed(object sender, ElapsedEventArgs e)
         {
             throw new NotImplementedException();

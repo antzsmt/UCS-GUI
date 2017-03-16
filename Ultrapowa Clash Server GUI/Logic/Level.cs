@@ -1,85 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using UCS.Core;
-using UCS.PacketProcessing;
-using UCS.GameFiles;
-
-namespace UCS.Logic
+﻿namespace UCS.Logic
 {
-    class Level
-    {
+    #region Usings
 
-        public GameObjectManager GameObjectManager;//a1 + 44
-        public WorkerManager WorkerManager;
-        private Client m_vClient;
-        private ClientAvatar m_vClientAvatar;
-        private DateTime m_vTime;//a1 + 40
+    using System;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    #endregion
+
+    internal class Level
+    {
+        public GameObjectManager GameObjectManager; // a1 + 44
+
         private byte m_vAccountPrivileges;
+
         private byte m_vAccountStatus;
-        //MissionManager
-        //AchievementManager
-        //CooldownManager
+
+        private Device m_vClient;
+
+        private ClientAvatar m_vClientAvatar;
+
+        private DateTime m_vTime; // a1 + 40
 
         public Level()
         {
-            WorkerManager = new WorkerManager();
-            GameObjectManager = new GameObjectManager(this);
-            m_vClientAvatar = new ClientAvatar();
-            m_vAccountPrivileges = 0;
-            m_vAccountStatus = 0;
+            this.GameObjectManager = new GameObjectManager(this);
+            this.m_vClientAvatar = new ClientAvatar();
+            this.m_vAccountPrivileges = 0;
+            this.m_vAccountStatus = 0;
         }
 
         public Level(long id)
         {
-            WorkerManager = new WorkerManager();
-            GameObjectManager = new GameObjectManager(this);
-            m_vClientAvatar = new ClientAvatar(id);
-            m_vTime = DateTime.UtcNow;
-            m_vAccountPrivileges = 0;
-            m_vAccountStatus = 0;
-        }
-
-        public string SaveToJSON()
-        {
-            return JsonConvert.SerializeObject(GameObjectManager.Save());
-        }
-
-        public void LoadFromJSON(string jsonString)
-        {
-            JObject jsonObject = JObject.Parse(jsonString);
-            GameObjectManager.Load(jsonObject);
+            this.GameObjectManager = new GameObjectManager(this);
+            this.m_vClientAvatar = new ClientAvatar(id);
+            this.m_vTime = DateTime.UtcNow;
+            this.m_vAccountPrivileges = 0;
+            this.m_vAccountStatus = 0;
         }
 
         public byte GetAccountPrivileges()
         {
-            return m_vAccountPrivileges;
+            return this.m_vAccountPrivileges;
         }
 
         public byte GetAccountStatus()
         {
-            return m_vAccountStatus;
+            return this.m_vAccountStatus;
         }
 
-        public Client GetClient()
+        public Device GetClient()
         {
-            return m_vClient;
+            return this.m_vClient;
         }
 
         public ClientAvatar GetHomeOwnerAvatar()
         {
             return this.m_vClientAvatar;
-        }
-
-        public ComponentManager GetComponentManager()
-        {
-            return GameObjectManager.GetComponentManager();
         }
 
         public ClientAvatar GetPlayerAvatar()
@@ -89,27 +67,33 @@ namespace UCS.Logic
 
         public DateTime GetTime()
         {
-            return m_vTime;
+            return this.m_vTime;
         }
 
-        public bool HasFreeWorkers()
+        public void LoadFromJSON(string jsonString)
         {
-            return WorkerManager.GetFreeWorkers() > 0;
+            JObject jsonObject = JObject.Parse(jsonString);
+            this.GameObjectManager.Load(jsonObject);
         }
 
-        public void SetAccountStatus(byte status)
+        public string SaveToJSON()
         {
-            m_vAccountStatus = status;
+            return JsonConvert.SerializeObject(this.GameObjectManager.Save());
         }
 
         public void SetAccountPrivileges(byte privileges)
         {
-            m_vAccountPrivileges = privileges;
+            this.m_vAccountPrivileges = privileges;
         }
 
-        public void SetClient(Client client)
+        public void SetAccountStatus(byte status)
         {
-            m_vClient = client;
+            this.m_vAccountStatus = status;
+        }
+
+        public void SetClient(Device client)
+        {
+            this.m_vClient = client;
         }
 
         public void SetHome(string jsonHome)
@@ -119,16 +103,13 @@ namespace UCS.Logic
 
         public void SetTime(DateTime t)
         {
-            m_vTime = t;
+            this.m_vTime = t;
         }
 
         public void Tick()
         {
-            SetTime(DateTime.UtcNow);
-            GameObjectManager.Tick();
-            //LogicMissionManager::tick(*(v1 + 48));
-            //LogicAchievementManager::tick(*(v1 + 52));
-            //LogicCooldownManager::tick(*(v1 + 68));
+            this.SetTime(DateTime.UtcNow);
+            this.GameObjectManager.Tick();
         }
     }
 }

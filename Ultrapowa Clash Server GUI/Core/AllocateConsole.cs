@@ -1,38 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UCS.Sys;
+﻿namespace UCS.Core {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using Sys;
 
-namespace UCS.Core
-{
-    class AllocateConsole
-    {
+    internal static class AllocateConsole {
         public static TextWriter StandardConsole;
-        public static void Allocate(bool IsHide = false)
-        {
+
+        public static void Allocate(bool IsHide = false) {
             IntPtr ptr = ConsoleManage.GetForegroundWindow();
             int u;
             ConsoleManage.GetWindowThreadProcessId(ptr, out u);
             Process process = Process.GetProcessById(u);
-            if (process.ProcessName == "cmd")
-            {
+            if (process.ProcessName == "cmd") {
                 ConsoleManage.AttachConsole(process.Id);
             }
-            else
-            {
+            else {
                 ConsoleManage.AllocConsole();
             }
+
             ConsoleManage.DisableConsoleExit();
 
             if (IsHide) ConsoleManage.HideConsole();
         }
 
-        public static void GetConsoleValue()
-        {
+        public static void GetConsoleValue() {
             StandardConsole = Console.Out;
         }
     }

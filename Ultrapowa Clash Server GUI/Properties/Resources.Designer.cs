@@ -10,8 +10,9 @@
 
 namespace UCS.Properties {
     using System;
-    
-    
+    using System.Globalization;
+    using System.Resources;
+
     /// <summary>
     ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
@@ -24,42 +25,47 @@ namespace UCS.Properties {
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        private static ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        private static CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
         
+
         /// <summary>
         ///   Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        public static ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UCS.Properties.Resources", typeof(Resources).Assembly);
+                    ResourceManager temp = new global::System.Resources.ResourceManager("UCS.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
+
                 return resourceMan;
             }
         }
         
+
         /// <summary>
         ///   Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
         ///   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        public static CultureInfo Culture {
             get {
                 return resourceCulture;
             }
+
             set {
                 resourceCulture = value;
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a About.
         /// </summary>
@@ -69,6 +75,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Cancel.
         /// </summary>
@@ -78,6 +85,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Error, changelog not downloaded....
         /// </summary>
@@ -87,6 +95,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Check update.
         /// </summary>
@@ -96,6 +105,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Commands.
         /// </summary>
@@ -105,6 +115,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Continue.
         /// </summary>
@@ -114,6 +125,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Debug mode.
         /// </summary>
@@ -123,6 +135,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Exit.
         /// </summary>
@@ -132,6 +145,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Feedback.
         /// </summary>
@@ -141,6 +155,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a GUI loaded.
         /// </summary>
@@ -150,6 +165,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Launch Server.
         /// </summary>
@@ -159,6 +175,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Loading GUI....
         /// </summary>
@@ -168,6 +185,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Local IP:.
         /// </summary>
@@ -177,6 +195,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Now measuring loading time.
         /// </summary>
@@ -186,6 +205,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a OK.
         /// </summary>
@@ -195,6 +215,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Operation completed in.
         /// </summary>
@@ -204,6 +225,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Player info.
         /// </summary>
@@ -213,6 +235,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Players online.
         /// </summary>
@@ -222,6 +245,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Restart Server.
         /// </summary>
@@ -231,6 +255,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Select a player first.
         /// </summary>
@@ -240,6 +265,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Server is already online.
         /// </summary>
@@ -249,6 +275,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Server config..
         /// </summary>
@@ -258,6 +285,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a The server is not running.
         /// </summary>
@@ -267,6 +295,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Server Online.
         /// </summary>
@@ -276,6 +305,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Up time:.
         /// </summary>
@@ -285,6 +315,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Using basic performance timer.
         /// </summary>
@@ -294,6 +325,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Using high performance timer.
         /// </summary>
@@ -303,6 +335,7 @@ namespace UCS.Properties {
             }
         }
         
+
         /// <summary>
         ///   Cerca una stringa localizzata simile a Utility.
         /// </summary>

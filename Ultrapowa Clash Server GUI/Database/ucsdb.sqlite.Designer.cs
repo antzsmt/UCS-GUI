@@ -1,10 +1,10 @@
-﻿// Generazione del codice predefinita abilitata per il modello 'C:\Users\ADeltaX\Documents\GitHub\UCS-GUI\Ultrapowa Clash Server GUI\Database\ucsdb.sqlite.edmx'. 
-// Per abilitare la generazione del codice legacy, modificare il valore della proprietà della finestra di progettazione 'Strategia di generazione del codice
-// su 'Legacy ObjectContext'. Questa proprietà è disponibile nella finestra Proprietà quando il modello è
-// aperto nella finestra di progettazione.
+﻿// La generación de código T4 está habilitada para el modelo 'E:\Clash Royale\UCS-GUI\Ultrapowa Clash Server GUI\Database\ucsdb.sqlite.edmx'. 
+// Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
+// por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
+// el modelo en el diseñador.
 
-// La mancata generazione di classi contesto ed entità può essere dovuta al fatto che è stato creato un modello vuoto, ma
-// non è ancora stata scelta la versione di Entity Framework da utilizzare. Per generare una classe contesto e classi entità
-// per il modello, aprire il modello nella finestra di progettazione, fare clic con il pulsante destro del mouse nell'area di progettazione e
-// selezionare 'Aggiorna modello da database...', 'Genera database da modello...' o 'Aggiungi elemento di generazione
-// codice...'.
+// Si no se ha generado ninguna clase de contexto y de entidad, puede que haya creado un modelo vacío pero
+// no haya elegido todavía la versión de Entity Framework que se va a usar. Para generar una clase de contexto y clases de entidad
+// para el modelo, abra el modelo en el diseñador, haga clic con el botón secundario en la superficie del diseñador y
+// seleccione 'Actualizar modelo desde base de datos...', 'Generar base de datos desde modelo...' o 'Agregar elemento de generación
+// de código...'.

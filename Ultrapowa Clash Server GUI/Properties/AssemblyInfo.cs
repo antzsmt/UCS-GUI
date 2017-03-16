@@ -30,24 +30,21 @@ using System.Windows;
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
-
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None, //dove si trovano i dizionari delle risorse specifiche del tema
-                                     //(in uso se non è possibile trovare una risorsa nella pagina 
+    ResourceDictionaryLocation.None, // dove si trovano i dizionari delle risorse specifiche del tema
+                                     // (in uso se non è possibile trovare una risorsa nella pagina 
                                      // oppure nei dizionari delle risorse dell'applicazione)
-    ResourceDictionaryLocation.SourceAssembly //dove si trova il dizionario delle risorse generiche
-                                              //(in uso se non è possibile trovare una risorsa nella pagina, 
+    ResourceDictionaryLocation.SourceAssembly // dove si trova il dizionario delle risorse generiche
+                                              // (in uso se non è possibile trovare una risorsa nella pagina, 
                                               // nell'applicazione o nei dizionari delle risorse specifiche del tema)
 )]
 
 
 // Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
-//
 //      Versione principale
 //      Versione secondaria 
 //      Numero di build
 //      Revisione
-//
 // È possibile specificare tutti i valori oppure impostare valori predefiniti per i numeri relativi alla revisione e alla build 
 // usando l'asterisco '*' come illustrato di seguito:
 // [assembly: AssemblyVersion("1.0.*")]

@@ -1,56 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
-using UCS.Core;
-using UCS.Core.Threading;
-using UCS.Logic;
-using UCS.Network;
-using UCS.PacketProcessing;
-using UCS.Sys;
+﻿#region Usings
+
+using UCS.Core.Settings;
+using UCS.Logic.Enums;
+
+#endregion
 
 namespace UCS.Helpers
 {
-    class CommandParser
-    {
+    #region Usings
 
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
+    using UCS.Core;
+    using UCS.Core.Network;
+    using UCS.Core.Threading;
+    using UCS.GameFiles;
+    using UCS.Logic;
+    using UCS.Packets;
+    using UCS.Packets.Messages.Server;
+    using UCS.Sys;
+
+    #endregion
+
+    internal class CommandParser
+    {
         public static void CommandRead(string cmd)
         {
-            if (cmd == null) if (ConfUCS.IsConsoleMode) ManageConsole();
+            if (cmd == null)
+                if (ConfUCS.IsConsoleMode)
+                    ManageConsole();
             try
             {
                 switch (cmd.ToLower())
                 {
                     case "/help":
+                        Console.WriteLine("/start                             <-- Inicia el servidor");
+                        Console.WriteLine("/ban <PlayerID>                    <-- Banear un jugador");
 
-                        Console.WriteLine("/start                             <-- Start the server");
-                        Console.WriteLine("/ban <PlayerID>                    <-- Ban a client");
-                        // Console.WriteLine("/banip <PlayerID>                  <-- Ban a client by IP");
-                        Console.WriteLine("/unban <PlayerID>                  <-- Unban a client");
-                        // Console.WriteLine("/unbanip <PlayerID>                <-- Unban a client");
-                        // Console.WriteLine("/tempban <PlayerID> <Seconds>      <-- Temporary ban a client");
-                        // Console.WriteLine("/tempbanip <PlayerID> <Seconds>    <-- Temporary ban a client by IP");
-                        Console.WriteLine("/kick <PlayerID>                   <-- Kick a client from the server");
-                        // Console.WriteLine("/mute <PlayerID>                   <-- Mute a client");
-                        // Console.WriteLine("/unmute <PlayerID>                 <-- Unmute a client");
-                        // Console.WriteLine("/setlevel <PlayerID> <Level>       <-- Set a level for a player");
-                        Console.WriteLine("/update                            <-- Check if update is available");
-                        // Console.WriteLine("/say <Text>                        <-- Send a text to all");
-                        // Console.WriteLine("/sayplayer <PlayerID> <Text>       <-- Send a text to a player");
-                        Console.WriteLine("/stop  or   /shutdown              <-- Stop the server and save data");
-                        Console.WriteLine("/forcestop                         <-- Force stop the server");
-                        Console.WriteLine("/restart                           <-- Save data and then restart");
-                        Console.WriteLine("/send sysinfo                      <-- Send server info to all players");
-                        Console.WriteLine("/status                            <-- Get server status");
-                        Console.WriteLine("/switch                            <-- Switch to GUI/Console mode");
+                        Console.WriteLine("/banip <PlayerID>                  <-- Banear un jugador mediante IP");
+                        Console.WriteLine("/unban <PlayerID>                  <-- Unbanear un jugador");
+
+                        Console.WriteLine("/unbanip <PlayerID>                <-- Unbanear un jugador");
+                        Console.WriteLine("/tempban <PlayerID> <Seconds>      <-- Banea un jugador temporalmente");
+                        Console.WriteLine("/tempbanip <PlayerID> <Seconds>    <-- Banea temporalmente un jugador mediante IP");
+                        Console.WriteLine("/kick <PlayerID>                   <-- Expulsa un jugador del servidor");
+
+                        Console.WriteLine("/mute <PlayerID>                   <-- Silencia a un jugador");
+                        Console.WriteLine("/unmute <PlayerID>                 <-- Quita silencio a jugador");
+                        Console.WriteLine("/setlevel <PlayerID> <Level>       <-- Fija un level a un jugador");
+                        Console.WriteLine("/update                            <-- Comprueba si hay actualizaciónes disponibles");
+
+                        Console.WriteLine("/say <Text>                        <-- Envia un mensaje a todos los jugadores");
+                        Console.WriteLine("/sayplayer <PlayerID> <Text>       <-- Envia un mensaje al jugador especificado");
+                        Console.WriteLine("/stop  or   /shutdown              <-- Detiene el servidor y guarda todos los datos");
+                        Console.WriteLine("/forcestop                         <-- Fuerza el cierre del servidor !! ATENCION SE PIERDEN LOS DATOS!!");
+                        Console.WriteLine("/restart                           <-- Guarda los datos y reinicia el servidor");
+                        Console.WriteLine("/send sysinfo                      <-- Envia la información del servidor a los jugadores conectados");
+                        Console.WriteLine("/status                            <-- Obtiene el estado el servidor");
+                        Console.WriteLine("/uptime                            <-- Obtiene el tiempo activo del servidor");
+                        Console.WriteLine("/switch                            <-- Cambiar modo GUI/Console");
+                        Console.WriteLine("/clear                             <-- Limpia todos los mensajes de a consola");
                         break;
 
                     case "/start":
@@ -60,19 +80,20 @@ namespace UCS.Helpers
                             ConsoleThread CT = new ConsoleThread();
                             CT.Start();
                         }
-                        else Console.WriteLine("Server already online!");
+                        else
+                            Core.Debug.Write("El servidor esta activo!");
                         break;
 
                     case "/stop":
                     case "/shutdown":
 
-                        Console.WriteLine("Shutting down... Saving all data, wait.");
+                        Core.Debug.Write("Apagando servidor... Guardando datos, esperare...");
 
                         foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
                         {
                             var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
                             p.SetCode(5);
-                            PacketManager.ProcessOutgoingPacket(p);
+                            p.Send();
                         }
 
                         ConsoleManage.FreeConsole();
@@ -81,18 +102,18 @@ namespace UCS.Helpers
 
                     case "/forcestop":
 
-                        Console.WriteLine("Force shutting down... All progress not saved will be lost!");
+                        Core.Debug.Write("Terminado proceso del servidor... los ultimos datos se perderan!");
                         Process.GetCurrentProcess().Kill();
                         break;
 
                     case "/uptime":
 
-                        Console.WriteLine("Up time: " + ControlTimer.ElapsedTime);
+                        Core.Debug.Write("Tiempo servidor iniciado: " + ControlTimer.ElapsedTime);
                         break;
 
                     case "/restart":
 
-                        Console.WriteLine("System Restarting....");
+                        Core.Debug.Write("Reiniciando servidor....");
 
                         var mail = new AllianceMailStreamEntry();
                         mail.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
@@ -102,8 +123,8 @@ namespace UCS.Helpers
                         mail.SetIsNew(0);
                         mail.SetAllianceId(0);
                         mail.SetAllianceBadgeData(0);
-                        mail.SetAllianceName("Legendary Administrator");
-                        mail.SetMessage("System is about to restart in a few moments.");
+                        mail.SetAllianceName("JJBreaker Administrador");
+                        mail.SetMessage("El servidor se reiniciará en breve.");
                         mail.SetSenderLevel(500);
                         mail.SetSenderLeagueId(22);
 
@@ -114,19 +135,17 @@ namespace UCS.Helpers
                             var p = new AvatarStreamEntryMessage(onlinePlayer.GetClient());
                             ps.SetCode(5);
                             p.SetAvatarStreamEntry(mail);
-                            pm.SetChatMessage("System is about to restart in a few moments.");
+                            pm.SetChatMessage("El servidor se reiniciará en breve.");
                             pm.SetPlayerId(0);
                             pm.SetLeagueId(22);
                             pm.SetPlayerName("System Manager");
-                            PacketManager.ProcessOutgoingPacket(p);
-                            PacketManager.ProcessOutgoingPacket(ps);
-                            PacketManager.ProcessOutgoingPacket(pm);
+                            p.Send();
+                            ps.Send();
+                            pm.Send();
                         }
-                        Console.WriteLine("Saving all data...");
-                        foreach (var l in ResourcesManager.GetOnlinePlayers())
-                        {
-                            //DatabaseManager.Singelton.Save(l);
-                        }
+                        Console.WriteLine("Guaradndo datos...");
+
+                        DatabaseManager.Save(ResourcesManager.GetInMemoryLevels());
 
                         Console.WriteLine("Restarting now");
 
@@ -136,7 +155,7 @@ namespace UCS.Helpers
 
                     case "/clear":
 
-                        Console.WriteLine("Console cleared");
+                        Core.Debug.Write("Consola limpiada");
                         if (ConfUCS.IsConsoleMode)
                             Console.Clear();
                         else
@@ -146,36 +165,35 @@ namespace UCS.Helpers
                     case "/status":
 
                         Console.WriteLine("Server IP: " + ConfUCS.GetIP() + " on port 9339");
-                        Console.WriteLine("IP Address (public): " + new WebClient().DownloadString("http://bot.whatismyipaddress.com/"));
+                        Console.WriteLine("IP Address (public): "
+                                          + new WebClient().DownloadString("http://bot.whatismyipaddress.com/"));
                         Console.WriteLine("Online Player: " + ResourcesManager.GetOnlinePlayers().Count);
                         Console.WriteLine("Connected Player: " + ResourcesManager.GetConnectedClients().Count);
-                        Console.WriteLine("Starting Gold: " + int.Parse(ConfigurationManager.AppSettings["StartingGold"]));
-                        Console.WriteLine("Starting Elixir: " +
-                                          int.Parse(ConfigurationManager.AppSettings["StartingElixir"]));
-                        Console.WriteLine("Starting Dark Elixir: " +
-                                          int.Parse(ConfigurationManager.AppSettings["StartingDarkElixir"]));
-                        Console.WriteLine("Starting Gems: " + int.Parse(ConfigurationManager.AppSettings["StartingGems"]));
-                        Console.WriteLine("CoC Version: " + ConfigurationManager.AppSettings["ClientVersion"]);
-                        if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]))
+                        Console.WriteLine("Starting Gold: " + Settings.StartingGold);
+                        Console.WriteLine("Starting Gems: " + Settings.StartingGems);
+                        var versionData = FingerPrint.version.Split('.');
+                        Console.WriteLine("CRS Version: " + versionData[0] + "." + versionData[1] + "." + versionData[2]);
+                        if (Convert.ToBoolean(Constants.Patching))
                         {
                             Console.WriteLine("Patch: Active");
-                            Console.WriteLine("Patching Server: " + ConfigurationManager.AppSettings["patchingServer"]);
+                            Console.WriteLine("Patching Server: " + Constants.PatchURL);
                         }
                         else
                         {
                             Console.WriteLine("Patch: Disable");
                         }
-                        if (Convert.ToBoolean(ConfigurationManager.AppSettings["maintenanceMode"]))
+
+                        if (Convert.ToBoolean(Settings.Maintenance))
                         {
                             Console.WriteLine("Maintance Mode: Active");
-                            Console.WriteLine("Maintance time: " +
-                                              Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) +
-                                              " Seconds");
+                            Console.WriteLine("Maintance time: " + Convert.ToInt32(Settings.MaintenanceDuration)
+                                              + " Seconds");
                         }
                         else
                         {
-                            Console.WriteLine("Maintance Mode: Disable");
+                            Core.Debug.Write("Maintance Mode: Disable");
                         }
+
                         break;
 
                     case "/send sysinfo":
@@ -192,9 +210,9 @@ namespace UCS.Helpers
                         mail1.SetAllianceBadgeData(0);
                         mail1.SetAllianceName("Legendary Administrator");
                         mail1.SetMessage("Latest Server Status:\nConnected Players:" +
-                                        ResourcesManager.GetConnectedClients().Count + "\nIn Memory Alliances:" +
-                                        ObjectManager.GetInMemoryAlliances().Count + "\nIn Memory Levels:" +
-                                        ResourcesManager.GetInMemoryLevels().Count);
+                        ResourcesManager.GetConnectedClients().Count + "\nIn Memory Alliances:" +
+                        ObjectManager.GetInMemoryAlliances().Count + "\nIn Memory Levels:" +
+                        ResourcesManager.GetInMemoryLevels().Count);
                         mail1.SetSenderLeagueId(22);
                         mail1.SetSenderLevel(500);
 
@@ -207,8 +225,8 @@ namespace UCS.Helpers
                             pm.SetLeagueId(22);
                             pm.SetPlayerName("System Manager");
                             p.SetAvatarStreamEntry(mail1);
-                            PacketManager.ProcessOutgoingPacket(p);
-                            PacketManager.ProcessOutgoingPacket(pm);
+                            p.Send();
+                            pm.Send();
                         }
                         break;
 
@@ -228,7 +246,7 @@ namespace UCS.Helpers
                                 {
                                     ResourcesManager.LogPlayerOut(l);
                                     var p = new OutOfSyncMessage(l.GetClient());
-                                    PacketManager.ProcessOutgoingPacket(p);
+                                    p.Send();
                                 }
                                 else
                                 {
@@ -261,8 +279,7 @@ namespace UCS.Helpers
                                     l.SetAccountPrivileges(0);
                                     if (ResourcesManager.IsPlayerOnline(l))
                                     {
-                                        var p = new OutOfSyncMessage(l.GetClient());
-                                        PacketManager.ProcessOutgoingPacket(p);
+                                        new OutOfSyncMessage(l.GetClient()).Send();
                                     }
                                 }
                                 else
@@ -296,25 +313,26 @@ namespace UCS.Helpers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Unban failed: id " + id + " not found");
+                                    Core.Debug.Write("Unban failed: id " + id + " not found");
                                 }
                             }
                             catch (FormatException)
                             {
-                                Console.WriteLine("The given id is not a valid number");
+                                Core.Debug.Write("The given id is not a valid number");
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("Unban failed with error: " + ex);
+                                Core.Debug.Write("Unban failed with error: " + ex);
                             }
                         }
-                        else Console.WriteLine("Not enough arguments");
+                        else
+                            Core.Debug.Write("Not enough arguments");
                         break;
 
                     case "/switch":
                         if (ConfUCS.IsConsoleFirst)
                         {
-                            Console.WriteLine("Sorry, you need to launch UCS in GUI mode first.");
+                            Core.Debug.Write("Sorry, you need to launch UCS in GUI mode first.");
                         }
                         else
                         {
@@ -323,7 +341,7 @@ namespace UCS.Helpers
                                 ConfUCS.IsConsoleMode = false;
                                 ConsoleManage.HideConsole();
                                 InterfaceThread.Start();
-                                Console.WriteLine("Switched to GUI");
+                                Core.Debug.Write("Switched to GUI");
                                 ControlTimer.SwitchTimer();
                             }
                             else
@@ -333,60 +351,60 @@ namespace UCS.Helpers
                                 Console.SetOut(AllocateConsole.StandardConsole);
                                 MainWindow.RemoteWindow.Hide();
                                 Console.Title = ConfUCS.UnivTitle;
-                                Console.WriteLine("Switched to Console");
+                                Core.Debug.Write("Switched to Console");
                                 ControlTimer.SwitchTimer();
                                 ManageConsole();
                             }
                         }
+
                         break;
 
                     default:
-                        Console.WriteLine("Unknown command. Type \"/help\" for a list containing all available commands.");
+                        Core.Debug.Write("Unknown command ( " + cmd + " ). Type \"/help\" for a list containing all available commands.");
                         break;
-
                 }
             }
             catch (Exception)
             {
-                Console.WriteLine("Something wrong happens...");
-                //throw;
+                Core.Debug.Write("Something wrong happens...");
+
+                // throw;
             }
-            
 
-            //else if (cmd.ToLower().StartsWith("/mute"))
-            //{
-            //    var CommGet = cmd.Split(' ');
-            //    if (CommGet.Length >= 2)
-            //    {
-            //        try
-            //        {
-            //            var id = Convert.ToInt64(CommGet[1]);
-            //            var l = ResourcesManager.GetPlayer(id);
-            //            if (ResourcesManager.IsPlayerOnline(l))
-            //            {
-            //                var p = new BanChatTrigger(l.GetClient());
-            //                p.SetCode(999999999);
-            //                PacketManager.ProcessOutgoingPacket(p);
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLineDebug("Chat Mute failed: id " + id + " not found", CoreWriter.level.DEBUGLOG);
-            //            }
-            //        }
-            //        catch (FormatException)
-            //        {
-            //            Console.WriteLineDebug("The given id is not a valid number", CoreWriter.level.DEBUGFATAL);
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Console.WriteLineDebug("Chat Mute failed with error: " + ex, CoreWriter.level.DEBUGFATAL);
-            //        }
-            //    }
-            //    else Console.WriteLineDebug("Not enough arguments", CoreWriter.level.DEBUGFATAL);
-            //}
+            // else if (cmd.ToLower().StartsWith("/mute"))
+            // {
+            // var CommGet = cmd.Split(' ');
+            // if (CommGet.Length >= 2)
+            // {
+            // try
+            // {
+            // var id = Convert.ToInt64(CommGet[1]);
+            // var l = ResourcesManager.GetPlayer(id);
+            // if (ResourcesManager.IsPlayerOnline(l))
+            // {
+            // var p = new BanChatTrigger(l.GetClient());
+            // p.SetCode(999999999);
+            // PacketManager.ProcessOutgoingPacket(p);
+            // }
+            // else
+            // {
+            // Console.WriteLineDebug("Chat Mute failed: id " + id + " not found", CoreWriter.level.DEBUGLOG);
+            // }
+            // }
+            // catch (FormatException)
+            // {
+            // Console.WriteLineDebug("The given id is not a valid number", CoreWriter.level.DEBUGFATAL);
+            // }
+            // catch (Exception ex)
+            // {
+            // Console.WriteLineDebug("Chat Mute failed with error: " + ex, CoreWriter.level.DEBUGFATAL);
+            // }
+            // }
+            // else Console.WriteLineDebug("Not enough arguments", CoreWriter.level.DEBUGFATAL);
+            // }
 
-
-           if (ConfUCS.IsConsoleMode) ManageConsole();
+            if (ConfUCS.IsConsoleMode)
+                ManageConsole();
         }
 
         public static void ManageConsole()

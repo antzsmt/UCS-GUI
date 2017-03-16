@@ -1,70 +1,69 @@
-using System.Collections;
-//using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System;
-
-
 namespace UCS.Network
 {
+    #region Usings
+
+    using System.Collections;
+    //using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+    using System;
+
+    #endregion
+
     public class SocketRead
     {
-        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
-        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
         public const int kBufferSize = 256;
 
-        Socket socket;
-        IncomingReadHandler readHandler;
-        IncomingReadErrorHandler errorHandler;
-        byte[] buffer = new byte[kBufferSize];
+        private byte[] buffer = new byte[SocketRead.kBufferSize];
 
+        private IncomingReadErrorHandler errorHandler;
 
-        public Socket Socket
-        {
-            get
-            {
-                return socket;
-            }
-        }
+        private IncomingReadHandler readHandler;
 
+        private Socket socket;
 
-        SocketRead(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
+        private SocketRead(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
         {
             this.socket = socket;
             this.readHandler = readHandler;
             this.errorHandler = errorHandler;
 
-            BeginReceive();
+	        this.BeginReceive();
         }
 
+        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
 
-        void BeginReceive()
-        {
-            socket.BeginReceive(buffer, 0, kBufferSize, SocketFlags.None, new AsyncCallback(OnReceive), this);
-        }
+        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
 
+        public Socket Socket => this.socket;
 
-        public static SocketRead Begin(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
+	    public static SocketRead Begin(Socket socket,
+                                       IncomingReadHandler readHandler,
+                                       IncomingReadErrorHandler errorHandler = null)
         {
             return new SocketRead(socket, readHandler, errorHandler);
         }
 
+        private void BeginReceive()
+        {
+	        this.socket.BeginReceive(this.buffer, 0, SocketRead.kBufferSize, SocketFlags.None, new AsyncCallback(this.OnReceive), this);
+        }
 
-        void OnReceive(IAsyncResult result)
+        private void OnReceive(IAsyncResult result)
         {
             try
             {
                 if (result.IsCompleted)
                 {
-                    int bytesRead = socket.EndReceive(result);
+                    int bytesRead = this.socket.EndReceive(result);
 
                     if (bytesRead > 0)
                     {
                         byte[] read = new byte[bytesRead];
-                        Array.Copy(buffer, 0, read, 0, bytesRead);
+                        Array.Copy(this.buffer, 0, read, 0, bytesRead);
 
-                        readHandler(this, read);
-                        Begin(socket, readHandler, errorHandler);
+	                    this.readHandler(this, read);
+                        SocketRead.Begin(this.socket, this.readHandler, this.errorHandler);
                     }
                     else
                     {
@@ -74,9 +73,9 @@ namespace UCS.Network
             }
             catch (Exception e)
             {
-                if (errorHandler != null)
+                if (this.errorHandler != null)
                 {
-                    errorHandler(this, e);
+	                this.errorHandler(this, e);
                 }
             }
         }

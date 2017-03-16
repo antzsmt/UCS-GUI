@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Configuration;
 using System.Windows;
-using UCS.PacketProcessing;
+using UCS.Packets;
 using UCS.Core;
 using UCS.GameFiles;
 using Newtonsoft.Json;

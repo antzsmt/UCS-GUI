@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UCS.PacketProcessing;
-using UCS.Helpers;
-
-namespace UCS.Logic
+﻿namespace UCS.Logic
 {
+    #region Usings
+
+    using System;
+    using System.Collections.Generic;
+
+    using UCS.Extensions.List;
+    using UCS.Helpers;
+
+    #endregion
+
     class AllianceMailStreamEntry : AvatarStreamEntry
     {
         private string m_vMessage;
-        private long m_vSenderId;
-        private string m_vAllianceName;
-        private int m_vAllianceBadgeData;
-        private long m_vAllianceId;
 
-        public AllianceMailStreamEntry()
-            : base()
-        {
-        }
+        private long m_vSenderId;
+
+        private string m_vAllianceName;
+
+        private int m_vAllianceBadgeData;
+
+        private long m_vAllianceId;
 
         public string GetMessage()
         {
-            return m_vMessage;
+            return this.m_vMessage;
         }
 
         public override int GetStreamEntryType()
@@ -47,39 +48,39 @@ namespace UCS.Logic
 
             data.AddRange(base.Encode());
             data.AddInt32(2);
-            data.AddString(m_vMessage);
+            data.AddString(this.m_vMessage);
             data.Add(1);
-            data.AddInt64(m_vSenderId);
-            data.AddInt64(m_vAllianceId);
-            data.AddString(m_vAllianceName);
-            data.AddInt32(m_vAllianceBadgeData);
+            data.AddInt64(this.m_vSenderId);
+            data.AddInt64(this.m_vAllianceId);
+            data.AddString(this.m_vAllianceName);
+            data.AddInt32(this.m_vAllianceBadgeData);
 
             return data.ToArray();
         }
 
         public void SetAllianceId(long id)
         {
-            m_vAllianceId = id;
+            this.m_vAllianceId = id;
         }
 
         public void SetAllianceName(string name)
         {
-            m_vAllianceName = name;
+            this.m_vAllianceName = name;
         }
 
         public void SetAllianceBadgeData(int data)
         {
-            m_vAllianceBadgeData = data;
+            this.m_vAllianceBadgeData = data;
         }
 
         public void SetMessage(string message)
         {
-            m_vMessage = message;
+            this.m_vMessage = message;
         }
 
         public void SetSenderId(long id)
         {
-            m_vSenderId = id;
+            this.m_vSenderId = id;
         }
-    }    
+    }
 }

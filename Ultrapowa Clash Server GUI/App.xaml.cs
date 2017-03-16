@@ -1,14 +1,18 @@
-﻿using System.Windows;
-using UCS.Sys;
-using UCS.Core;
-using UCS.Core.Threading;
-using System.Configuration;
+﻿// using UCS.Core.Threading;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Threading;
+using System.Windows;
+
+using UCS.Core;
+using UCS.Sys;
 
 namespace UCS
 {
+    using UCS.Core.Threading;
+    using UCS.UI;
+
     public partial class App : Application
     {
         [STAThread]
@@ -17,7 +21,6 @@ namespace UCS
            // Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de-DE", true);
            // Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE", true);
            // UCS.Properties.Resources.Culture = new System.Globalization.CultureInfo("de-DE",true);
-
             if (ConfigurationManager.AppSettings["guiMode"].ToLower() == "true")
                 ConfUCS.IsConsoleMode = false;
             else
@@ -31,19 +34,22 @@ namespace UCS
                 if (e.Args[i].ToLower() == "/gui") ConfUCS.IsConsoleMode = false;
                 if (e.Args[i].ToLower() == "/default") ConfUCS.IsDefaultMode = true;
                 if (e.Args[i].ToLower() == "/nodebug") ConfUCS.DebugMode = false;
-                //if (e.Args[i].ToLower() == "/pirate") null;
+
+                // if (e.Args[i].ToLower() == "/pirate") null;
             }
+
             if (!ConfUCS.IsConsoleMode)
             {
                 AllocateConsole.Allocate(true);
                 AllocateConsole.GetConsoleValue();
-                UI.SplashScreen SC = new UI.SplashScreen(); SC.Show();
+                SplashScreen SC = new UI.SplashScreen(); SC.Show();
 
             }
             else
             {
                 AllocateConsole.Allocate();
                 AllocateConsole.GetConsoleValue();
+
                 ConsoleThread CT = new ConsoleThread();
                 CT.Start();
             }

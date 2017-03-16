@@ -1,20 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using UCS.Network;
-using UCS.Sys;
-
-namespace UCS.Core.Threading
+﻿namespace UCS.Core.Threading
 {
-    class NetworkThread
+    #region Usings
+
+    using System;
+    using System.Threading;
+
+    using Network;
+    using Network.Ancient;
+
+    using Sys;
+
+    using UCS.Network;
+    using UCS.Packets;
+
+    #endregion
+
+    internal static class NetworkThread
     {
-        public static string Name = "Network Thread";
-        public static string Description = "Includes the Core (PacketManager etc.)";
-        public static string Version = "1.0.0";
-        public static string Author = "ExPl0itR";
+        // private static string Author = "ExPl0itR";
+
+        // public static string Description = "Includes the Core (PacketManager etc.)";
+
+        // public static string Name = "Network Thread";
+
+        // public static string Version = "1.0.0";
+        private static Command_Factory _CommandFactory = null;
+
+        private static MessageFactory _MessageFactory = null;
+
+        private static ObjectManager _ObjectManager = null;
+
+        private static ResourcesManager _ResourcesManager = null;
 
         /// <summary>
         /// Variable holding the thread itself
@@ -27,21 +43,24 @@ namespace UCS.Core.Threading
         public static void Start()
         {
             T = new Thread(() =>
-                {
-                    Gateway g = new Gateway();
-                    PacketManager ph = new PacketManager();
-                    MessageManager dp = new MessageManager();
-                    ResourcesManager rm = new ResourcesManager();
-                    ObjectManager pm = new ObjectManager();
-                    dp.Start();
-                    ph.Start();
-                    g.Start();
-                    ApiManager api = new ApiManager();
-                    ControlTimer.StopPerformanceCounter();
-                    ControlTimer.Setup();
-                    ConfUCS.IsServerOnline = true;
-                    Console.WriteLine("Server started, let's play Clash of Clans!");
-                });
+            {
+                Gateway g = new Gateway();
+                //PacketManager ph = new PacketManager();
+                _CommandFactory = new Command_Factory();
+                _MessageFactory = new MessageFactory();
+                _ResourcesManager = new ResourcesManager();
+                MessageManager dp = new MessageManager();
+
+                _ObjectManager = new ObjectManager();
+                dp.Start();
+                //ph.Start();
+
+                // ApiManager api = new ApiManager();
+                ControlTimer.StopPerformanceCounter();
+                ControlTimer.Setup();
+                ConfUCS.IsServerOnline = true;
+                Console.WriteLine("Server started, let's play Clash Royale!");
+            });
             T.Start();
         }
 
