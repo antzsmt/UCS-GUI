@@ -1,33 +1,31 @@
-﻿using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Extensions.List;
+    using UCS.Extensions.List;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
-    using Logic.Enums;
+    #endregion
 
-    using Packets;
-
-    #endregion Usings
     internal class Clan_Data : Message
     {
-        public const ushort PacketID   = 24301;
+        public const ushort PacketID = 24301;
 
-        public long ClanID             = 0;
+        public long ClanID = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Clan_Data"/> class.
+        ///     Initialize a new instance of the <see cref="Clan_Data" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Clan_Data(Device _Device) : base(_Device)
+        public Clan_Data(Device _Device)
+            : base(_Device)
         {
-            this.ID     = PacketID;
+            this.ID = PacketID;
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {
@@ -44,11 +42,7 @@ namespace UCS.Packets.Messages.Server
                 this.Writer.AddInt(128);
                 this.Writer.AddVInt(1);
                 this.Writer.AddVInt(0);
-                this.Writer.AddRange(new byte[]
-                {
-                    0x82, 0x8A, 0x01, 0x01,
-                    0x00, 0x39, 0x97, 0x01
-                });
+                this.Writer.AddRange(new byte[] { 0x82, 0x8A, 0x01, 0x01, 0x00, 0x39, 0x97, 0x01 });
                 this.Writer.AddString("ClashRoyaleSpain Official Clan !");
 
                 this.Writer.AddVInt(1);
@@ -57,7 +51,7 @@ namespace UCS.Packets.Messages.Server
                 this.Writer.AddString(null); // Unknown
                 this.Writer.AddString("[ADMIN] JJBreaker"); // Name
                 this.Writer.Add(0x36); // Arena Prefix
-                this.Writer.AddVInt((int) Arena.ARENA_L); // Arena
+                this.Writer.AddVInt((int)Arena.ARENA_L); // Arena
                 this.Writer.AddVInt(2); // Role
                 this.Writer.AddVInt(13); // Level
                 this.Writer.AddVInt(5000); // Score
@@ -67,6 +61,6 @@ namespace UCS.Packets.Messages.Server
                 this.Writer.Add(1);
                 this.Writer.AddLong(1);
             }
-        } 
+        }
     }
 }

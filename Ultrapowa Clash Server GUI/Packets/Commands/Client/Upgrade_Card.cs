@@ -1,7 +1,6 @@
 ﻿#region Usings
 
-using UCS.Core;
-using UCS.Logic;
+
 
 #endregion
 
@@ -9,34 +8,35 @@ namespace UCS.Packets.Commands.Client
 {
     #region Usings
 
-    using Packets;
-
+    using UCS.Core;
     using UCS.Extensions.Binary;
     using UCS.Extensions.List;
+    using UCS.Logic;
 
     #endregion
 
     internal class Upgrade_Card : Command
     {
-        public int CardID = 0;
+        public int CardID;
 
-        public int Tick = 0;
+        public int Tick;
 
-        public int Type = 0;
+        public int Type;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Upgrade_Card" /> class.
+        ///     Initialize a new instance of the <see cref="Upgrade_Card" /> class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The identifier.</param>
-        public Upgrade_Card(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID)
+        public Upgrade_Card(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
         {
             // Upgrade_Card.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -50,7 +50,7 @@ namespace UCS.Packets.Commands.Client
         }
 
         /// <summary>
-        /// Processe this instance.
+        ///     Processe this instance.
         /// </summary>
         /// <param name="level"></param>
         public override void Process()

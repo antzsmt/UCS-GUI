@@ -63,17 +63,19 @@
 
         /// <summary>
         ///     <para>
-        ///         Initialize a new instance of the <see cref="Authentification" />
-        ///         class.
+        ///         Initialize a new instance of the
+        ///         <see cref="Authentification" />class.
         ///     </para>
         ///     <para>
-        ///         This message is sent by the client, for login into the server.
+        ///         This message is sent by the client, for login into the
+        ///         server.
         ///     </para>
         ///     <para>
         ///         The server send a
-        ///         <see cref="UCS.Packets.Messages.Server.Authentification_OK" /> if it
-        ///         success, otherwise, it send a
-        ///         <see cref="UCS.Packets.Messages.Server.Authentification_Failed" /> .
+        ///         <see cref="UCS.Packets.Messages.Server.Authentification_OK" />
+        ///         if it success, otherwise, it send a
+        ///         <see cref="UCS.Packets.Messages.Server.Authentification_Failed" />
+        ///         .
         ///     </para>
         /// </summary>
         /// <param name="_Client">The client.</param>
@@ -182,7 +184,7 @@
         public override void Process(Level level)
         {
             level = ResourcesManager.GetPlayer(this.UserID);
- 
+
             if (Convert.ToBoolean(Constants.Patching))
             {
                 if (this.MasterHash != ObjectManager.FingerPrint.sha)
@@ -226,7 +228,7 @@
 
             ResourcesManager.LogPlayerIn(level, this.Client);
             level.Tick();
-            
+
             if (level.GetAccountPrivileges() > 0)
             {
                 level.GetPlayerAvatar().SetLeagueId(21);
@@ -262,7 +264,9 @@
                 {
                     var SectorPC = new Sector_PC(this.Client)
                                        {
-                                           Battle = ResourcesManager.Battles[level.GetPlayerAvatar().GetId()]
+                                           Battle =
+                                               ResourcesManager.Battles[
+                                                   level.GetPlayerAvatar().GetId()]
                                        };
                     SectorPC.Send();
 
@@ -276,7 +280,7 @@
             else
             {
                 new Own_Home_Data(this.Client).Send();
-                
+
                 if (level.GetPlayerAvatar().GetClan())
                 {
                     new Clan_Data(this.Client).Send();

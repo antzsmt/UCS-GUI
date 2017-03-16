@@ -1,33 +1,34 @@
-﻿namespace UCS.Packets.Messages.Client {
+﻿namespace UCS.Packets.Messages.Client
+{
     #region Usings
 
-    using Core;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Logic;
 
-    using Extensions.Binary;
+    #endregion
 
-    using Logic;
-
-    using Packets;
-
-    #endregion Usings
-
-    internal class Battle_Stream : Message {
+    internal class Battle_Stream : Message
+    {
         public const ushort PacketID = 14406;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Battle_Stream"/> class.
+        ///     Initialize a new instance of the <see cref="Battle_Stream" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Battle_Stream(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header) {
+        public Battle_Stream(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
+        {
             // Battle_Stream.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             int[] unk = new int[2];
             unk[0] = this.Reader.ReadInt32();
             unk[1] = this.Reader.ReadInt32();

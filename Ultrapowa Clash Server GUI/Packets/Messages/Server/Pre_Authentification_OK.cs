@@ -2,15 +2,9 @@ namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Packets;
-
-    using Extensions.List;
-
-    using Logic.Enums;
-
-    using Core;
-
-    using Logic;
+    using UCS.Extensions.List;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
     #endregion
 
@@ -18,11 +12,11 @@ namespace UCS.Packets.Messages.Server
     {
         public const ushort PacketID = 20100;
 
-        private byte[] Key = null;
+        private byte[] Key;
 
         /// <summary>
-        /// Initialize a new instance of the
-        /// <see cref="Pre_Authentification_OK" /> class.
+        ///     Initialize a new instance of the
+        ///     <see cref="Pre_Authentification_OK" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
         public Pre_Authentification_OK(Device _Device)
@@ -32,11 +26,10 @@ namespace UCS.Packets.Messages.Server
             this.Key = new byte[24];
 
             this.Client.State = State.SESSION_OK;
-            Debug.Write("ID: " + this.ID);
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {
@@ -45,7 +38,7 @@ namespace UCS.Packets.Messages.Server
         }
 
         /// <summary>
-        /// <see cref="Encrypt"/> this instance.
+        ///     <see cref="Encrypt" /> this instance.
         /// </summary>
         public override void Encrypt()
         {

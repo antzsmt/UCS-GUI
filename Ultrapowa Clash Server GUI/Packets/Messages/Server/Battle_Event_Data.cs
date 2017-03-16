@@ -1,38 +1,41 @@
-﻿using UCS.Core;
-using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Extensions.List;
-    using Packets;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    #endregion Usings
+    #endregion
 
     internal class Battle_Event_Data : Message
     {
-        public const ushort PacketID    = 22952;
+        public const ushort PacketID = 22952;
 
-        public long CommandSender       = 0;
-        public int CommandID            = 0;
-        public int CommandValue         = 0;
-        public int CommandTick          = 0;
-        public int CommandUnk           = 0;
-        public int CommandUnk2          = 0;
+        public long CommandSender = 0;
+
+        public int CommandID = 0;
+
+        public int CommandValue = 0;
+
+        public int CommandTick = 0;
+
+        public int CommandUnk = 0;
+
+        public int CommandUnk2 = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Battle_Event_Data"/> class.
+        ///     Initialize a new instance of the <see cref="Battle_Event_Data" />
+        ///     class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Battle_Event_Data(Device _Device) : base(_Device)
+        public Battle_Event_Data(Device _Device)
+            : base(_Device)
         {
-            this.ID     = PacketID;
-            Debug.Write("ID: " + this.ID);
+            this.ID = PacketID;
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

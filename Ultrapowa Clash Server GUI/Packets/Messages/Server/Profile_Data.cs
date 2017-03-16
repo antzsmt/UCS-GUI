@@ -1,6 +1,6 @@
 ﻿#region Usings
 
-using UCS.Logic;
+
 
 #endregion
 
@@ -8,11 +8,9 @@ namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Core;
-
-    using Extensions.List;
-
-    using Packets;
+    using UCS.Core;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
     #endregion
 
@@ -23,17 +21,18 @@ namespace UCS.Packets.Messages.Server
         public long UserID = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Profile_Data" /> class.
+        ///     Initialize a new instance of the <see cref="Profile_Data" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Profile_Data(Device _Device) : base(_Device)
+        public Profile_Data(Device _Device)
+            : base(_Device)
         {
             this.ID = PacketID;
             Debug.Write("UserID: " + this.UserID);
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

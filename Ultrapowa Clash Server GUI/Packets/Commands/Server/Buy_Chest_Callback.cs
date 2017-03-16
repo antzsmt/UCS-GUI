@@ -1,53 +1,60 @@
-namespace UCS.Packets.Commands.Server {
+namespace UCS.Packets.Commands.Server
+{
     #region Usings
 
-    using Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
+    using UCS.Logic.Slots;
+    using UCS.Logic.Slots.Items;
 
-    using Extensions.Binary;
-    using Extensions.List;
+    #endregion
 
-    using Logic;
-    using Logic.Slots;
-    using Logic.Slots.Items;
-
-    using Packets;
-
-    #endregion Usings
-
-    internal class Buy_Chest_Callback : Command {
+    internal class Buy_Chest_Callback : Command
+    {
         public const int CommandID = 210;
 
-        public int Tick = 0;
+        public int Tick;
+
         public int ChestID = 0;
+
         public int Type = 4;
+
         public int Gems = 1;
+
         public int Gold = 1;
 
         public Deck Cards = new Deck();
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Buy_Chest_Callback"/> class.
+        ///     Initialize a new instance of the <see cref="Buy_Chest_Callback" />
+        ///     class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The packet identifier.</param>
-        public Buy_Chest_Callback(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID) {
+        public Buy_Chest_Callback(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
+        {
             // Buy_Chest_Callback.
         }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Buy_Chest_Callback"/> class.
+        ///     Initialize a new instance of the <see cref="Buy_Chest_Callback" />
+        ///     class.
         /// </summary>
         /// <param name="_Client">The client.</param>
-        public Buy_Chest_Callback(Device _Client) : base(_Client) {
+        public Buy_Chest_Callback(Device _Client)
+            : base(_Client)
+        {
             this.ID = CommandID;
-            Debug.Write("ID: " + this.ID);
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             this.Reader.ReadBytes((int)this.Reader.BaseStream.Length - 12);
 
             // 01-00-00-00-04-02-00
@@ -62,14 +69,16 @@ namespace UCS.Packets.Commands.Server {
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
-        public override void Encode() {
+        public override void Encode()
+        {
             this.Writer.AddVInt(1);
 
             this.Writer.AddVInt(this.Cards.Count);
 
-            foreach (Card _Card in this.Cards) {
+            foreach (Card _Card in this.Cards)
+            {
                 this.Writer.AddVInt(_Card.Type);
                 this.Writer.AddVInt(_Card.ID);
                 this.Writer.AddVInt(_Card.Level);

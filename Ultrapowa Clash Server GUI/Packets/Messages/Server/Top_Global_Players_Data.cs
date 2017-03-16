@@ -2,27 +2,27 @@
 {
     #region Usings
 
-    using Packets;
-    using UCS.Core;
     using UCS.Logic;
-    #endregion Usings
+
+    #endregion
 
     internal class Top_Global_Players_Data : Message
     {
         public const ushort PacketID = 24403;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Top_Global_Players_Data"/> class.
+        ///     Initialize a new instance of the
+        ///     <see cref="Top_Global_Players_Data" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Top_Global_Players_Data(Device _Device) : base(_Device)
+        public Top_Global_Players_Data(Device _Device)
+            : base(_Device)
         {
-            this.ID     = PacketID;
-            Debug.Write("ID: " + this.ID);
+            this.ID = PacketID;
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

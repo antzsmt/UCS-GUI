@@ -1,13 +1,10 @@
-﻿using UCS.Core;
-using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Packets;
+    using UCS.Logic;
 
-    #endregion Usings
+    #endregion
 
     internal class Royale_TV_Data : Message
     {
@@ -16,17 +13,17 @@ namespace UCS.Packets.Messages.Server
         public int Arena = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Royale_TV_Data"/> class.
+        ///     Initialize a new instance of the <see cref="Royale_TV_Data" />class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Royale_TV_Data(Device _Device) : base(_Device)
+        public Royale_TV_Data(Device _Device)
+            : base(_Device)
         {
             this.ID = PacketID;
-            Debug.Write("ID: " + this.ID);
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

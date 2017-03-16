@@ -5,10 +5,9 @@
     using System;
     using System.Collections.Generic;
 
-    using Extensions.Binary;
-
-    using Logic;
-    using Logic.Enums;
+    using UCS.Extensions.Binary;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
     #endregion
 

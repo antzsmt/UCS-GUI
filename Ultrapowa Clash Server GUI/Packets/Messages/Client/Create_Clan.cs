@@ -1,42 +1,47 @@
-﻿using UCS.Core;
-
-namespace UCS.Packets.Messages.Client {
+﻿namespace UCS.Packets.Messages.Client
+{
     #region Usings
 
-    using Extensions.Binary;
-    using Extensions.List;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Logic;
+    #endregion
 
-    using Packets;
-
-    #endregion Usings
-
-    internal class Create_Clan : Message {
+    internal class Create_Clan : Message
+    {
         public const ushort PacketID = 14301;
 
         public string Name = string.Empty;
+
         public string Description = string.Empty;
 
-        public int Badge = 0;
-        public int Origin = 0;
-        public int Required_Score = 0;
-        public int Type = 0;
+        public int Badge;
+
+        public int Origin;
+
+        public int Required_Score;
+
+        public int Type;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Create_Clan"/> class.
+        ///     Initialize a new instance of the <see cref="Create_Clan" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Create_Clan(Device _Client, Reader _Reader, int[] _Header) : base(_Client, _Reader, _Header) {
+        public Create_Clan(Device _Client, Reader _Reader, int[] _Header)
+            : base(_Client, _Reader, _Header)
+        {
             // Create_Clan.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             this.Name = this.Reader.ReadString();
             Debug.Write("Name: " + this.Name);
             this.Description = this.Reader.ReadString();

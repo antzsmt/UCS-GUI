@@ -5,27 +5,21 @@
     using System;
     using System.Collections.Generic;
 
-    using Logic;
-
-    using Messages.Client;
-
-    using System.IO;
-
-    using Core;
+    using UCS.Packets.Messages.Client;
 
     #endregion
 
     internal class MessageFactory : IDisposable
     {
         /// <summary>
-        /// A list of all available <see cref="Message" /> s.
+        ///     A list of all available <see cref="Message" /> s.
         /// </summary>
         internal static Dictionary<int, Type> m_vMessages;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="MessageFactory" />
-        /// class. When initialized, it will fill the list with all available
-        /// <see cref="Message" /> s.
+        ///     Initialize a new instance of the <see cref="MessageFactory" />
+        ///     class. When initialized, it will fill the list with all available
+        ///     <see cref="Message" /> s.
         /// </summary>
         static MessageFactory()
         {
@@ -104,7 +98,7 @@
         //}
 
         /// <summary>
-        /// <see cref="Dispose"/> the class.
+        ///     <see cref="Dispose" /> the class.
         /// </summary>
         public void Dispose()
         {

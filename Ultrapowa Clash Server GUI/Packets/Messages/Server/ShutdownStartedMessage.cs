@@ -1,17 +1,11 @@
-﻿using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    #region Usings
 
-    using UCS.Core;
     using UCS.Extensions.List;
-    using UCS.Helpers;
-    using UCS.Packets;
+    using UCS.Logic;
+
+    #endregion
 
     // Packet 20161
     class ShutdownStartedMessage : Message

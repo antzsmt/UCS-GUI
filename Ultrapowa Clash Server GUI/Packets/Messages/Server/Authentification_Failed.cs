@@ -1,28 +1,23 @@
-﻿using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
     using System.Linq;
 
-    using Extensions.List;
+    using UCS.Extensions.List;
+    using UCS.Library.Blake2b;
+    using UCS.Library.Sodium;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
-    using Library.Blake2b;
-    using Library.Sodium;
-
-    using Logic.Enums;
-
-    using Packets;
-
-    #endregion Usings
+    #endregion
 
     internal class Authentification_Failed : Message
     {
         public const ushort PacketID = 20103;
 
         /// <summary>
-        /// Reason why login failed.
+        ///     Reason why login failed.
         /// </summary>
         private CodesFail m_vErrorCode;
 
@@ -34,13 +29,18 @@ namespace UCS.Packets.Messages.Server
         private string m_vReason;
 
         private string m_vUpdateURL;
-		private string m_vContentURL;//60
-		private string m_vRedirectDomain;//56
-		private string m_vResourceFingerprintData;//52
-		private int m_vRemainingTime;
+
+        private string m_vContentURL; //60
+
+        private string m_vRedirectDomain; //56
+
+        private string m_vResourceFingerprintData; //52
+
+        private int m_vRemainingTime;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Authentification_Failed"/> class.
+        ///     Initialize a new instance of the
+        ///     <see cref="Authentification_Failed" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
         public Authentification_Failed(Device _Device)
@@ -64,30 +64,31 @@ namespace UCS.Packets.Messages.Server
         {
             this.m_vRemainingTime = code;
         }
-		public void SetContentURL(string url)
-		{
-			m_vContentURL = url;
-		}
 
-		public void SetRedirectDomain(string domain)
-		{
-			m_vRedirectDomain = domain;
-		}
+        public void SetContentURL(string url)
+        {
+            this.m_vContentURL = url;
+        }
 
-		public void SetResourceFingerprintData(string data)
-		{
-			m_vResourceFingerprintData = data;
-		}
+        public void SetRedirectDomain(string domain)
+        {
+            this.m_vRedirectDomain = domain;
+        }
 
-		public void SetUpdateURL(string url)
-		{
-			m_vUpdateURL = url;
-		}
+        public void SetResourceFingerprintData(string data)
+        {
+            this.m_vResourceFingerprintData = data;
+        }
 
-		/// <summary>
-		/// Encode this instance.
-		/// </summary>
-		public override void Encode()
+        public void SetUpdateURL(string url)
+        {
+            this.m_vUpdateURL = url;
+        }
+
+        /// <summary>
+        ///     <see cref="Encode" /> this instance.
+        /// </summary>
+        public override void Encode()
         {
             this.Writer.Add((byte)this.m_vErrorCode);
             this.Writer.AddString(this.m_vResourceFingerprintData);
@@ -99,7 +100,7 @@ namespace UCS.Packets.Messages.Server
         }
 
         /// <summary>
-        /// Encrypt this instance.
+        ///     <see cref="Encrypt" /> this instance.
         /// </summary>
         public override void Encrypt()
         {

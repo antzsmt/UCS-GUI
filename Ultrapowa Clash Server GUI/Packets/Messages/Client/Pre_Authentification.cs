@@ -4,18 +4,13 @@
 
     using System;
 
-    using Core;
-    using Core.Network;
-    using Core.Settings;
-
-    using Extensions.Binary;
-
-    using Logic;
-    using Logic.Enums;
-
-    using Packets;
-
-    using Server;
+    using UCS.Core;
+    using UCS.Core.Network;
+    using UCS.Core.Settings;
+    using UCS.Extensions.Binary;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
+    using UCS.Packets.Messages.Server;
 
     #endregion
 
@@ -36,19 +31,20 @@
         private new int[] Version = new int[3];
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Pre_Authentification" />
-        /// class.
+        ///     Initialize a new instance of the <see cref="Pre_Authentification" />
+        ///     class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Pre_Authentification(Device _Client, Reader _Reader, int[] _Header) : base(_Client, _Reader, _Header)
+        public Pre_Authentification(Device _Client, Reader _Reader, int[] _Header)
+            : base(_Client, _Reader, _Header)
         {
             this.Client.State = State.SESSION;
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -73,12 +69,16 @@
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         /// <param name="level">
         /// </param>
         /// <exception cref="OverflowException">
-        /// <paramref name="value" /> es menor que <see cref="F:System.TimeSpan.MinValue" /> o mayor que <see cref="F:System.TimeSpan.MaxValue" />.O bienEl valor de <paramref name="value" /> es <see cref="F:System.Double.PositiveInfinity" />.O bienEl valor de <paramref name="value" /> es <see cref="F:System.Double.NegativeInfinity" />. </exception>
+        ///     <paramref name="value" /> es menor que <see cref="F:System.TimeSpan.MinValue" /> o mayor que
+        ///     <see cref="F:System.TimeSpan.MaxValue" />.O bienEl valor de <paramref name="value" /> es
+        ///     <see cref="F:System.Double.PositiveInfinity" />.O bienEl valor de <paramref name="value" /> es
+        ///     <see cref="F:System.Double.NegativeInfinity" />.
+        /// </exception>
         public override void Process(Level level)
         {
             var p = new Authentification_Failed(this.Client);

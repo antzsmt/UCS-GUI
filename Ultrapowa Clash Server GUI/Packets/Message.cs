@@ -6,14 +6,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Extensions;
-    using Extensions.Binary;
-    using Extensions.List;
-
-    using Library.Sodium;
-
-    using Logic;
-    using Logic.Enums;
+    using UCS.Extensions;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Library.Sodium;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
     #endregion
 
@@ -28,7 +26,7 @@
         private ushort m_vType;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Message" /> class.
+        ///     Initialize a new instance of the <see cref="Message" /> class.
         /// </summary>
         public Message()
         {
@@ -44,7 +42,7 @@
         }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Message" /> class.
+        ///     Initialize a new instance of the <see cref="Message" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
         public Message(Device _Device)
@@ -63,7 +61,7 @@
         }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Message" /> class.
+        ///     Initialize a new instance of the <see cref="Message" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
         /// <param name="_Reader">The reader.</param>
@@ -84,71 +82,71 @@
         }
 
         /// <summary>
-        /// Get or set the client data.
+        ///     Get or set the client data.
         /// </summary>
         /// <value>
-        /// The client.
+        ///     The client.
         /// </value>
         public Device Client { get; set; }
 
         /// <summary>
-        /// Get or set the message payload.
+        ///     Get or set the message payload.
         /// </summary>
         /// <value>
-        /// The data.
+        ///     The data.
         /// </value>
         public byte[] Data { get; set; }
 
         /// <summary>
-        /// Get or set the packet direction.
+        ///     Get or set the packet direction.
         /// </summary>
         /// <value>
-        /// The direction.
+        ///     The direction.
         /// </value>
         public Direction Direction { get; set; }
 
         /// <summary>
-        /// Get or set the message identifier.
+        ///     Get or set the message identifier.
         /// </summary>
         /// <value>
-        /// The identifier.
+        ///     The identifier.
         /// </value>
         public ushort ID { get; set; }
 
         /// <summary>
-        /// Get or set the payload length.
+        ///     Get or set the payload length.
         /// </summary>
         /// <value>
-        /// The length.
+        ///     The length.
         /// </value>
         public int Length { get; set; }
 
         /// <summary>
-        /// Get or set the reader.
+        ///     Get or set the reader.
         /// </summary>
         /// <value>
-        /// The reader.
+        ///     The reader.
         /// </value>
         public Reader Reader { get; set; }
 
         /// <summary>
-        /// Get or set the message version.
+        ///     Get or set the message version.
         /// </summary>
         /// <value>
-        /// The version.
+        ///     The version.
         /// </value>
         public ushort Version { get; set; }
 
         /// <summary>
-        /// Get or set the writer.
+        ///     Get or set the writer.
         /// </summary>
         /// <value>
-        /// The writer.
+        ///     The writer.
         /// </value>
         public List<byte> Writer { get; set; }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public virtual void Decode()
         {
@@ -156,7 +154,7 @@
         }
 
         /// <summary>
-        /// <see cref="Decrypt"/> this instance.
+        ///     <see cref="Decrypt" /> this instance.
         /// </summary>
         public virtual void Decrypt()
         {
@@ -164,8 +162,10 @@
             {
                 this.Client.SNonce.Increment();
 
-                this.Data = Sodium.Decrypt(new byte[16].Concat(this.Data).ToArray(), this.Client.SNonce,
-                                           this.Client.PublicKey);
+                this.Data = Sodium.Decrypt(
+                    new byte[16].Concat(this.Data).ToArray(),
+                    this.Client.SNonce,
+                    this.Client.PublicKey);
                 this.Reader = new Reader(this.Data);
                 this.Length = this.Data.Length;
             }
@@ -181,7 +181,7 @@
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public virtual void Encode()
         {
@@ -189,7 +189,7 @@
         }
 
         /// <summary>
-        /// <see cref="Encrypt"/> this instance.
+        ///     <see cref="Encrypt" /> this instance.
         /// </summary>
         public virtual void Encrypt()
         {
@@ -200,7 +200,8 @@
                 this.Data =
                     Sodium.Encrypt(this.Writer.ToArray(), this.Client.RNonce, this.Client.PublicKey).Skip(16).ToArray();
                 this.Length = this.Data.Length;
-            } else
+            }
+            else
             {
                 this.Data = this.Writer.ToArray();
                 this.Length = this.Data.Length;
@@ -225,10 +226,10 @@
         }
 
         /// <summary>
-        /// Get the packet, in bytes array.
+        ///     Get the packet, in bytes array.
         /// </summary>
         /// <returns>
-        /// The packet, in bytes array, header included.
+        ///     The packet, in bytes array, header included.
         /// </returns>
         public byte[] GetPacket()
         {
@@ -257,7 +258,7 @@
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public virtual void Process(Level level)
         {

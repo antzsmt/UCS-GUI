@@ -1,34 +1,38 @@
-﻿using UCS.Core;
-using UCS.Logic;
-
-namespace UCS.Packets.Messages.Client {
+﻿namespace UCS.Packets.Messages.Client
+{
     #region Usings
 
-    using Extensions.Binary;
-    using Extensions.List;
-    using Packets;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    #endregion Usings
+    #endregion
 
-    internal class Search_Tournaments : Message {
+    internal class Search_Tournaments : Message
+    {
         public const ushort PacketID = 16113;
 
         public string Name = string.Empty;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Search_Tournaments"/> class.
+        ///     Initialize a new instance of the <see cref="Search_Tournaments" />
+        ///     class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Search_Tournaments(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header) {
+        public Search_Tournaments(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
+        {
             // Search_Tournaments.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             this.Name = this.Reader.ReadString();
 
             var test = this.Reader.ReadVInt();

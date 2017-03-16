@@ -1,6 +1,6 @@
 ﻿#region Usings
 
-using UCS.Logic;
+
 
 #endregion
 
@@ -8,14 +8,9 @@ namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using System;
-    using System.Collections.Generic;
-
-    using Packets;
-
-    using UCS.Core;
     using UCS.Core.Network;
     using UCS.Extensions.List;
+    using UCS.Logic;
     using UCS.Logic.Slots.Items;
 
     #endregion
@@ -29,17 +24,18 @@ namespace UCS.Packets.Messages.Server
         public long Sender = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Battle_Command_Data" />
-        /// class.
+        ///     Initialize a new instance of the <see cref="Battle_Command_Data" />
+        ///     class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Battle_Command_Data(Device _Device) : base(_Device)
+        public Battle_Command_Data(Device _Device)
+            : base(_Device)
         {
             this.ID = PacketID;
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

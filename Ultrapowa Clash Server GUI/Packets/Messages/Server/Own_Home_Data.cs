@@ -2,13 +2,8 @@ namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Extensions.List;
-
-    using Packets;
-
-    using Core;
-
-    using Logic;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
     #endregion
 
@@ -17,16 +12,17 @@ namespace UCS.Packets.Messages.Server
         public const ushort PacketID = 24101;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Own_Home_Data" /> class.
+        ///     Initialize a new instance of the <see cref="Own_Home_Data" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Own_Home_Data(Device _Device) : base(_Device)
+        public Own_Home_Data(Device _Device)
+            : base(_Device)
         {
             this.ID = PacketID;
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {

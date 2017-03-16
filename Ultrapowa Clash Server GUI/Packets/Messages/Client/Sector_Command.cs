@@ -2,16 +2,10 @@
 {
     #region Usings
 
-    using Core;
-
-    using Extensions.Binary;
-    using Extensions.List;
-
-    using GameFiles;
-
-    using Logic;
-
-    using Packets;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
     #endregion
 
@@ -19,21 +13,22 @@
     {
         public const ushort PacketID = 12904;
 
-        public int Command_Count = 0;
+        public int Command_Count;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Sector_Command" />class.
+        ///     Initialize a new instance of the <see cref="Sector_Command" />class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Sector_Command(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header)
+        public Sector_Command(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
         {
             // Sector_Command.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -70,7 +65,7 @@
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public override void Process(Level level)
         {

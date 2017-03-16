@@ -1,7 +1,6 @@
 #region Usings
 
-using UCS.Core;
-using UCS.Logic;
+
 
 #endregion
 
@@ -9,11 +8,11 @@ namespace UCS.Packets.Commands.Client
 {
     #region Usings
 
-    using Packets;
-
+    using UCS.Core;
     using UCS.Core.Network;
     using UCS.Extensions.Binary;
     using UCS.Extensions.List;
+    using UCS.Logic;
     using UCS.Packets.Commands.Server;
     using UCS.Packets.Messages.Server;
 
@@ -23,21 +22,22 @@ namespace UCS.Packets.Commands.Client
     {
         public int Chest_ID = 0;
 
-        public int Tick = 0;
+        public int Tick;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Free_Chest" /> class.
+        ///     Initialize a new instance of the <see cref="Free_Chest" /> class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The identifier.</param>
-        public Free_Chest(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID)
+        public Free_Chest(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
         {
             // Free_Chest.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -48,7 +48,7 @@ namespace UCS.Packets.Commands.Client
         }
 
         /// <summary>
-        /// Processe this instance.
+        ///     Processe this instance.
         /// </summary>
         public override void Process()
         {

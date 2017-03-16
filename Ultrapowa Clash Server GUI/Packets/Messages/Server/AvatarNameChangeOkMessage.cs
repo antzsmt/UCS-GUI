@@ -1,15 +1,11 @@
-﻿using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    #region Usings
 
-    using Extensions.List;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Packets;
+    #endregion
 
     // Packet 24111
     class AvatarNameChangeOkMessage : Message

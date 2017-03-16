@@ -1,39 +1,40 @@
-using UCS.Logic;
-
-namespace UCS.Packets.Commands.Battles {
+namespace UCS.Packets.Commands.Battles
+{
     #region Usings
 
-    using Core;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Extensions.List;
+    #endregion
 
-    using Packets;
-
-    #endregion Usings
-
-    internal class Place_Unit : Command {
+    internal class Place_Unit : Command
+    {
         public const int CommandID = 3;
 
         public long Sender = 0;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Place_Unit"/> class.
+        ///     Initialize a new instance of the <see cref="Place_Unit" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
-        public Place_Unit(Device _Client) : base(_Client) {
+        public Place_Unit(Device _Client)
+            : base(_Client)
+        {
             this.ID = CommandID;
-            Debug.Write("ID: " + this.ID);
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {}
+        public override void Decode()
+        {
+        }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
-        public override void Encode() {
+        public override void Encode()
+        {
             this.Writer.AddRange("01-A8-01-7F".HexaToBytes());
             this.Writer.AddVInt(this.Sender); // 11-BB-AE-F2-06
             this.Writer.AddRange("05-83-EA-E5-18-01".HexaToBytes());

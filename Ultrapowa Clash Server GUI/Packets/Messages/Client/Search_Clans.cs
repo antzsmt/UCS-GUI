@@ -2,63 +2,60 @@
 {
     #region Usings
 
-    using Core;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Extensions.Binary;
-    using Extensions.List;
-
-    using Files;
-
-    using GameFiles;
-
-    using Logic;
-    using Logic.Enums;
-
-    using Packets;
-
-    #endregion Usings
+    #endregion
 
     internal class Search_Clans : Message
     {
-        public const ushort PacketID    = 14324;
+        public const ushort PacketID = 14324;
 
-        public string Name          = string.Empty;
-        public int Minimum_Players  = 0;
-        public int Maxium_Players   = 0;
-        public int Required_Score   = 0;
-        public int Origin           = 0;
-        public bool Open_Only       = false;
+        public string Name = string.Empty;
+
+        public int Minimum_Players;
+
+        public int Maxium_Players;
+
+        public int Required_Score;
+
+        public int Origin;
+
+        public bool Open_Only;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Search_Clans"/> class.
+        ///     Initialize a new instance of the <see cref="Search_Clans" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Search_Clans(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header)
+        public Search_Clans(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
         {
             // Search_Clans.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
             // Decode.
-            
-            this.Name               = this.Reader.ReadString();
-            this.Origin             = this.Reader.ReadVInt();
+
+            this.Name = this.Reader.ReadString();
+            this.Origin = this.Reader.ReadVInt();
 
             if (this.Origin > 0)
             {
-                this.Origin         = this.Reader.ReadVInt();
+                this.Origin = this.Reader.ReadVInt();
             }
 
-            this.Minimum_Players    = this.Reader.ReadInt32();
-            this.Maxium_Players     = this.Reader.ReadInt32();
-            this.Required_Score     = this.Reader.ReadInt32();
-            this.Open_Only          = this.Reader.ReadBoolean();
+            this.Minimum_Players = this.Reader.ReadInt32();
+            this.Maxium_Players = this.Reader.ReadInt32();
+            this.Required_Score = this.Reader.ReadInt32();
+            this.Open_Only = this.Reader.ReadBoolean();
 
             var test = this.Reader.ReadInt32();
             var test2 = this.Reader.ReadInt32();
@@ -73,7 +70,7 @@
         }
 
         /// <summary>
-        /// Process this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public override void Process(Level level)
         {

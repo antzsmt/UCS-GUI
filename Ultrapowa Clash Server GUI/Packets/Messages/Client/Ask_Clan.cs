@@ -2,16 +2,11 @@
 {
     #region Usings
 
-    using Core;
-    using Core.Network;
-
-    using Extensions.Binary;
-
-    using Logic;
-
-    using Packets;
-
-    using Server;
+    using UCS.Core;
+    using UCS.Core.Network;
+    using UCS.Extensions.Binary;
+    using UCS.Logic;
+    using UCS.Packets.Messages.Server;
 
     #endregion
 
@@ -19,21 +14,22 @@
     {
         public const ushort PacketID = 14302;
 
-        public long ClanID = 0;
+        public long ClanID;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Ask_Clan" /> class.
+        ///     Initialize a new instance of the <see cref="Ask_Clan" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Ask_Clan(Device _Client, Reader _Reader, int[] _Header) : base(_Client, _Reader, _Header)
+        public Ask_Clan(Device _Client, Reader _Reader, int[] _Header)
+            : base(_Client, _Reader, _Header)
         {
             // Ask_Clan.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {

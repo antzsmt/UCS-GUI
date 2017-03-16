@@ -1,28 +1,29 @@
-﻿namespace UCS.Packets.Messages.Client {
+﻿namespace UCS.Packets.Messages.Client
+{
     #region Usings
 
-    using Core;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Extensions.Binary;
-    using Extensions.List;
+    #endregion
 
-    using Logic;
-
-    using Packets;
-
-    #endregion Usings
-
-    internal class Client_Capabilities : Message {
+    internal class Client_Capabilities : Message
+    {
         public const ushort PacketID = 10107;
 
-        public Client_Capabilities(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header) {
+        public Client_Capabilities(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
+        {
             // Client_Capabilities.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             this.Client.Ping = this.Reader.ReadVInt();
             this.Client.Interface = this.Reader.ReadString();
             Debug.Write("Client.Ping: " + this.Client.Ping);

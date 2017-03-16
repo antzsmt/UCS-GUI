@@ -5,18 +5,15 @@
     using System;
     using System.Collections.Generic;
 
-    using Commands.Client;
-    using Commands.Server;
-
-    using Extensions.Binary;
-    using Extensions.List;
+    using UCS.Packets.Commands.Client;
+    using UCS.Packets.Commands.Server;
 
     #endregion
 
     internal class Command_Factory : IDisposable
     {
         /// <summary>
-        /// A list of all available <see cref="Command" /> s.
+        ///     A list of all available <see cref="Command" /> s.
         /// </summary>
         public static Dictionary<int, Type> Commands = new Dictionary<int, Type>();
 
@@ -70,7 +67,7 @@
         //}
 
         /// <summary>
-        /// <see cref="Dispose"/> the class.
+        ///     <see cref="Dispose" /> the class.
         /// </summary>
         public void Dispose()
         {

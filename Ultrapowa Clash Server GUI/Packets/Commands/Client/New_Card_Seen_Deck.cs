@@ -1,30 +1,36 @@
-﻿namespace UCS.Packets.Commands.Client {
-    using Core;
+﻿namespace UCS.Packets.Commands.Client
+{
+    #region Usings
 
-    using Extensions.Binary;
-    using Extensions.List;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Logic;
+    #endregion
 
-    using Packets;
-
-    class New_Card_Seen_Deck : Command {
-        public int Tick = 0;
+    class New_Card_Seen_Deck : Command
+    {
+        public int Tick;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="New_Card_Seen_Deck"/> class.
+        ///     Initialize a new instance of the <see cref="New_Card_Seen_Deck" />
+        ///     class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The identifier.</param>
-        public New_Card_Seen_Deck(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID) {
+        public New_Card_Seen_Deck(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
+        {
             // New_Card_Seen_Deck.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             this.Tick = this.Reader.ReadVInt();
             this.Tick = this.Reader.ReadVInt();
             this.Reader.ReadInt16();

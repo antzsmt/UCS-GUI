@@ -1,32 +1,28 @@
-﻿using UCS.Core;
-using UCS.Logic;
-
-namespace UCS.Packets.Messages.Server
+﻿namespace UCS.Packets.Messages.Server
 {
     #region Usings
 
-    using Packets;
-
     using UCS.Extensions.List;
+    using UCS.Logic;
 
-    #endregion Usings
+    #endregion
 
     internal class Friends_List : Message
     {
         public const ushort PacketID = 20105;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Friends_List"/> class.
+        ///     Initialize a new instance of the <see cref="Friends_List" /> class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Friends_List(Device _Device) : base(_Device)
+        public Friends_List(Device _Device)
+            : base(_Device)
         {
-            this.ID     = PacketID;
-            Debug.Write("ID: " + this.ID);
+            this.ID = PacketID;
         }
 
         /// <summary>
-        /// Encode this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {
@@ -39,7 +35,8 @@ namespace UCS.Packets.Messages.Server
             this.Writer.AddLong(2); // ID
 
             this.Writer.AddString("Aidid"); // Name
-            this.Writer.AddString("1083844704999868"); // App-Scoped FB User ID | E.g : https://graph.facebook.com/v2.2/1083844704999868/picture 
+            this.Writer.AddString("1083844704999868");
+                // App-Scoped FB User ID | E.g : https://graph.facebook.com/v2.2/1083844704999868/picture 
             this.Writer.AddString("G:537371520"); // Gamecenter ID
             this.Writer.AddUShort(12); // Level
             this.Writer.AddVInt(4000);
@@ -58,7 +55,8 @@ namespace UCS.Packets.Messages.Server
             this.Writer.AddLong(1); // ID
 
             this.Writer.AddString("Berkan"); // Name
-            this.Writer.AddString("222174321456941"); // App-Scoped FB User ID | E.g : https://graph.facebook.com/v2.2/222174321456941/picture 
+            this.Writer.AddString("222174321456941");
+                // App-Scoped FB User ID | E.g : https://graph.facebook.com/v2.2/222174321456941/picture 
             this.Writer.AddString("G:537371521"); // Gamecenter ID
             this.Writer.AddUShort(13); // Level
             this.Writer.AddVInt(5000);

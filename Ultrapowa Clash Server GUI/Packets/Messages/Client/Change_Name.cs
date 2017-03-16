@@ -1,6 +1,6 @@
 ﻿#region Usings
 
-using UCS.Core;
+
 
 #endregion
 
@@ -8,17 +8,12 @@ namespace UCS.Packets.Messages.Client
 {
     #region Usings
 
-    using Commands.Server;
-
-    using Core.Network;
-
-    using Extensions.Binary;
-
-    using Logic;
-
-    using Packets;
-
-    using Server;
+    using UCS.Core;
+    using UCS.Core.Network;
+    using UCS.Extensions.Binary;
+    using UCS.Logic;
+    using UCS.Packets.Commands.Server;
+    using UCS.Packets.Messages.Server;
 
     #endregion
 
@@ -31,18 +26,19 @@ namespace UCS.Packets.Messages.Client
         public string Name = string.Empty;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Change_Name" /> class.
+        ///     Initialize a new instance of the <see cref="Change_Name" /> class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Change_Name(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header)
+        public Change_Name(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
         {
             // Set_Name.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -53,7 +49,7 @@ namespace UCS.Packets.Messages.Client
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public override void Process(Level level)
         {

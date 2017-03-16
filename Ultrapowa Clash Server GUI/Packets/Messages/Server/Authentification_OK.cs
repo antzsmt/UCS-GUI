@@ -5,15 +5,11 @@ namespace UCS.Packets.Messages.Server
     using System;
     using System.Linq;
 
-    using Extensions.List;
-
-    using Library.Blake2b;
-    using Library.Sodium;
-
-    using Logic.Enums;
-    using Logic;
-
-    using Packets;
+    using UCS.Extensions.List;
+    using UCS.Library.Blake2b;
+    using UCS.Library.Sodium;
+    using UCS.Logic;
+    using UCS.Logic.Enums;
 
     #endregion
 
@@ -60,18 +56,19 @@ namespace UCS.Packets.Messages.Server
         private string Startup = string.Empty;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Authentification_OK" />
-        /// class.
+        ///     Initialize a new instance of the <see cref="Authentification_OK" />
+        ///     class.
         /// </summary>
         /// <param name="_Device">The device.</param>
-        public Authentification_OK(Device _Device) : base(_Device)
+        public Authentification_OK(Device _Device)
+            : base(_Device)
         {
             this.ID = PacketID;
             this.Client.State = State.LOGGED;
         }
 
         /// <summary>
-        /// <see cref="Encode"/> this instance.
+        ///     <see cref="Encode" /> this instance.
         /// </summary>
         public override void Encode()
         {
@@ -104,15 +101,17 @@ namespace UCS.Packets.Messages.Server
             // someid2 String
             this.Writer.AddVInt((int)TimeStamp.TotalSeconds);
             this.Writer.AddString(TimeStamp.TotalMilliseconds.ToString("#"));
-            this.Writer.AddString(pl.GetPlayerAvatar().GetCreated().Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString("#"));
-            this.Writer.AddString(pl.GetPlayerAvatar().GetCreated().Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString("#"));
+            this.Writer.AddString(
+                pl.GetPlayerAvatar().GetCreated().Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString("#"));
+            this.Writer.AddString(
+                pl.GetPlayerAvatar().GetCreated().Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString("#"));
 
             this.Writer.AddVInt(0);
             this.Writer.AddString(null);
         }
 
         /// <summary>
-        /// <see cref="Encrypt"/> this instance.
+        ///     <see cref="Encrypt" /> this instance.
         /// </summary>
         public override void Encrypt()
         {

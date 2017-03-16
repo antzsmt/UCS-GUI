@@ -4,12 +4,10 @@
 
     using System;
 
-    using Extensions.Binary;
-    using Extensions.List;
-
-    using Logic;
-
     using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
     #endregion
 
@@ -17,28 +15,29 @@
     {
         public const ushort PacketID = 14102;
 
-        public uint Checksum = 0;
+        public uint Checksum;
 
-        public byte[] Commands = null;
+        public byte[] Commands;
 
-        public uint Count = 0;
+        public uint Count;
 
-        public uint Tick = 0;
+        public uint Tick;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Execute_Commands" />
-        /// class.
+        ///     Initialize a new instance of the <see cref="Execute_Commands" />
+        ///     class.
         /// </summary>
         /// <param name="_Client">The client.</param>
         /// <param name="Reader">The reader.</param>
         /// <param name="_Header">The header.</param>
-        public Execute_Commands(Device _Client, Reader Reader, int[] _Header) : base(_Client, Reader, _Header)
+        public Execute_Commands(Device _Client, Reader Reader, int[] _Header)
+            : base(_Client, Reader, _Header)
         {
             // Execute_Commands.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -54,7 +53,7 @@
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public override void Process(Level level)
         {

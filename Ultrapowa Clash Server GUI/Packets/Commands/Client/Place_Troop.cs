@@ -1,37 +1,43 @@
-﻿namespace UCS.Packets.Commands.Client {
-    using System;
+﻿namespace UCS.Packets.Commands.Client
+{
+    #region Usings
 
-    using Core;
+    using UCS.Core;
+    using UCS.Extensions.Binary;
+    using UCS.Extensions.List;
+    using UCS.Logic;
 
-    using Extensions.Binary;
-    using Extensions.List;
+    #endregion
 
-    using Logic;
-
-    using Packets;
-
-    class Place_Troop : Command {
-        public int TroopID = 0;
+    class Place_Troop : Command
+    {
+        public int TroopID;
 
         private int[] ints = new int[10];
+
         private string[] strings = new string[10];
+
         private long[] longs = new long[10];
+
         private object[] objects = new object[10];
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Place_Troop"/> class.
+        ///     Initialize a new instance of the <see cref="Place_Troop" /> class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The identifier.</param>
-        public Place_Troop(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID) {
+        public Place_Troop(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
+        {
             // Place_Troop.
         }
 
         /// <summary>
-        /// Decode this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
-        public override void Decode() {
+        public override void Decode()
+        {
             // B8-0F-8C-10-00-01-01-81-EA-E5-18-00-94-46-84-A1-02
             // 8B-05-9F-05-00-01-03-83-EA-E5-18-00-B4-07-A4-DC-03
             // 91-07-A5-07-00-01-02-82-EA-E5-18-00-B4-07-A4-DC-03

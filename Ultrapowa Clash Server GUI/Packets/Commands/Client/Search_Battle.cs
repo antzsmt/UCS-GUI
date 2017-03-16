@@ -1,7 +1,6 @@
 ﻿#region Usings
 
-using UCS.Core.Network;
-using UCS.Logic;
+
 
 #endregion
 
@@ -9,12 +8,11 @@ namespace UCS.Packets.Commands.Client
 {
     #region Usings
 
-    using Packets;
-    using Packets;
-
     using UCS.Core;
+    using UCS.Core.Network;
     using UCS.Extensions.Binary;
     using UCS.Extensions.List;
+    using UCS.Logic;
     using UCS.Logic.Slots.Items;
     using UCS.Packets.Messages.Server;
 
@@ -23,25 +21,26 @@ namespace UCS.Packets.Commands.Client
     internal class Search_Battle : Command
     {
         /// <summary>
-        /// A Temporary <see cref="Player"/> variable.
+        ///     A Temporary <see cref="Player" /> variable.
         /// </summary>
         public ClientAvatar Player = null;
 
-        public int Tick = 0;
+        public int Tick;
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="Search_Battle" /> class.
+        ///     Initialize a new instance of the <see cref="Search_Battle" /> class.
         /// </summary>
         /// <param name="_Reader">The reader.</param>
         /// <param name="_Client">The client.</param>
         /// <param name="_ID">The identifier.</param>
-        public Search_Battle(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID)
+        public Search_Battle(Reader _Reader, Device _Client, int _ID)
+            : base(_Reader, _Client, _ID)
         {
             // Search_Battle.
         }
 
         /// <summary>
-        /// <see cref="Decode"/> this instance.
+        ///     <see cref="Decode" /> this instance.
         /// </summary>
         public override void Decode()
         {
@@ -55,7 +54,7 @@ namespace UCS.Packets.Commands.Client
         }
 
         /// <summary>
-        /// <see cref="Process"/> this instance.
+        ///     <see cref="Process" /> this instance.
         /// </summary>
         public override void Process()
         {
@@ -63,7 +62,8 @@ namespace UCS.Packets.Commands.Client
             {
                 ResourcesManager.Battles.Enqueue(this.Client.GetLevel());
                 new Matchmaking_Info(this.Client).Send();
-            } else
+            }
+            else
             {
                 Level _Enemy = ResourcesManager.Battles.Dequeue();
                 Battle Battle = new Battle(_Enemy, this.Client.GetLevel());
