@@ -1,0 +1,6 @@
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\bin\Debug\Ultrapowa Client Patcher.exe.config
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\bin\Debug\Ultrapowa Client Patcher.exe
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\bin\Debug\Ultrapowa Client Patcher.pdb
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\obj\Debug\Ultrapowa Client Patcher.csprojResolveAssemblyReference.cache
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\obj\Debug\Ultrapowa Client Patcher.exe
+E:\Clash Of Clans\Ultrapowa-Client-Patcher\Ultrapowa Client Patcher\obj\Debug\Ultrapowa Client Patcher.pdb
