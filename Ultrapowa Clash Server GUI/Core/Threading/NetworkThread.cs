@@ -17,13 +17,6 @@
 
     internal static class NetworkThread
     {
-        // private static string Author = "ExPl0itR";
-
-        // public static string Description = "Includes the Core (PacketManager etc.)";
-
-        // public static string Name = "Network Thread";
-
-        // public static string Version = "1.0.0";
         private static Command_Factory _CommandFactory = null;
 
         private static MessageFactory _MessageFactory = null;

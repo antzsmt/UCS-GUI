@@ -12,20 +12,6 @@
 
     internal class MemoryThread
     {
-        public static string Author = "ExPl0itR";
-
-        public static string Description = "Running the GC every 2,5 secs";
-
-        public static string Name = "Memory Thread";
-
-        public static string Version = "1.0.0";
-
-        private static string Command;
-
-        private static string Title;
-
-        private static string Tmp;
-
         /// <summary>
         /// Variable holding the thread itself
         /// </summary>

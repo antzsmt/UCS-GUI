@@ -337,7 +337,6 @@
             var _Writer = new Prefixed();
             Console.SetOut(_Writer);
 
-            // var CT = new Loader();
             CT.Start();
             this.BTN_LaunchServer.IsEnabled = false;
         }

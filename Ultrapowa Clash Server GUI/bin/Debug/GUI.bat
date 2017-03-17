@@ -1,2 +1,0 @@
-"UCS.exe" /gui
-exit
